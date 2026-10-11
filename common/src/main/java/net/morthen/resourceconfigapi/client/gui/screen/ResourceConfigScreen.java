@@ -44,7 +44,7 @@ public class ResourceConfigScreen extends Screen {
     private TabNavigationBar navigationBar;
 
     private final Map<Identifier, ConfigHolder> configs = new HashMap<>();
-    private final List<ClientTooltipComponent> tooltips = new ArrayList<>();
+    private final List<Component> tooltips = new ArrayList<>();
 
     private final ConfigTab commonTab, clientTab, serverTab;
 
@@ -108,8 +108,8 @@ public class ResourceConfigScreen extends Screen {
         graphics.blit(RenderPipelines.GUI_TEXTURED, Screen.FOOTER_SEPARATOR, 0, this.height - 35,
                 0F, 0F, this.width, 2, 32, 2);
 
-        this.tooltips.forEach(tooltip -> graphics.tooltip(GuiUtils.getFont(),
-                List.of(tooltip), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null));
+
+        this.tooltips.forEach(tooltip -> graphics.setTooltipForNextFrame(getFont().split(tooltip, 170), mouseX, mouseY));
         this.tooltips.clear();
     }
 
@@ -172,7 +172,7 @@ public class ResourceConfigScreen extends Screen {
         }
     }
 
-    public void addTooltip(ClientTooltipComponent tooltipProvider) {
+    public void addTooltip(Component tooltipProvider) {
         this.tooltips.add(tooltipProvider);
     }
 

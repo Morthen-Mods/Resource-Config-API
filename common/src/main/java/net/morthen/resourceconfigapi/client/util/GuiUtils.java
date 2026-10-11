@@ -46,7 +46,7 @@ public class GuiUtils {
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, texture, xPos, yPos, 0, 0, 11, 11, 11, 11);
 
         if (inBounds(xPos, yPos, xPos + 11, yPos + 11, mouseX, mouseY)) {
-            screen.addTooltip(createTooltip(tooltip));
+            screen.addTooltip(tooltip);
         }
     }
 

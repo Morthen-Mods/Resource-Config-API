@@ -56,9 +56,4 @@ public class BooleanValueEntry extends ButtonValueEntry<Boolean> {
         changeUndoState(!Objects.equals(state, getFieldValue()));
         super.resetValues();
     }
-
-    @Override
-    public ClientTooltipComponent getTooltip() {
-        return GuiUtils.createTooltip(this.tooltip);
-    }
 }

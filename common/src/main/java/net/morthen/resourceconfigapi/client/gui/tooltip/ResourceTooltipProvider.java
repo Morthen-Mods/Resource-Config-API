@@ -1,7 +1,7 @@
 package net.morthen.resourceconfigapi.client.gui.tooltip;
 
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.network.chat.Component;
 
 public interface ResourceTooltipProvider {
-    ClientTooltipComponent getTooltip();
+    Component getTooltip();
 }

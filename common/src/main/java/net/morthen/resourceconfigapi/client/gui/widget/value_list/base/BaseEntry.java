@@ -70,7 +70,7 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
     public void resetValues() {}
 
     @Override
-    public ClientTooltipComponent getTooltip() {
-        return GuiUtils.createTooltip(this.tooltip);
+    public Component getTooltip() {
+        return this.tooltip;
     }
 }
