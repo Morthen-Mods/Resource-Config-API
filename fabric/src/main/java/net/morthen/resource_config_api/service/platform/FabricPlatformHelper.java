@@ -1,5 +1,6 @@
 package net.morthen.resource_config_api.service.platform;
 
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.nio.file.Path;
@@ -11,17 +12,14 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public boolean isModLoaded(String modId) {
-        return FabricLoader.getInstance().isModLoaded(modId);
+    public boolean isDedicatedServer() {
+        return FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER;
     }
 
     @Override
-    public boolean isDev() {
-        return FabricLoader.getInstance().isDevelopmentEnvironment();
-    }
-
-    @Override
-    public String getName() {
-        return "Fabric";
+    public String getModName(String modId) {
+        return FabricLoader.getInstance().getModContainer(modId)
+                .map(mod -> mod.getMetadata().getName())
+                .orElse(modId);
     }
 }

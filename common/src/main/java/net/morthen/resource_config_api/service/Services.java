@@ -1,6 +1,6 @@
 package net.morthen.resource_config_api.service;
 
-import net.morthen.resource_config_api.CommonConstants;
+import net.morthen.resource_config_api.ConfigConstants;
 import net.morthen.resource_config_api.service.platform.IPlatformHelper;
 
 import java.util.ServiceLoader;
@@ -13,7 +13,7 @@ public class Services {
         final T loadedService = ServiceLoader.load(clazz)
                 .findFirst()
                 .orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
-        CommonConstants.LOGGER.debug("Loaded {} for service {}", loadedService, clazz);
+        ConfigConstants.LOGGER.debug("Loaded {} for service {}", loadedService, clazz);
         return loadedService;
     }
 }

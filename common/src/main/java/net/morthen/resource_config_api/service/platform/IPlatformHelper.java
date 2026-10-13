@@ -5,9 +5,7 @@ import java.nio.file.Path;
 public interface IPlatformHelper {
     Path getConfigDir();
 
-    boolean isModLoaded(String modId);
+    boolean isDedicatedServer();
 
-    boolean isDev();
-
-    String getName();
+    String getModName(String modId);
 }
