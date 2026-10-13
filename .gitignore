@@ -1,21 +1,32 @@
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+.cache
 
-### IntelliJ IDEA ###
-.idea
+# idea
+out
+*.ipr
 *.iws
 *.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+.idea/*
+!.idea/scopes
 
-### Game Options ###
-/common/runs/client
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+/common/runs/data/*
+/common/runs/client/*
 !/common/runs/client/options.txt
-/common/runs/server
-!/common/runs/server/eula.txt
+/common/runs/server/*
 !/common/runs/server/server.properties
+!/common/runs/server/eula.txt
+/common/runs/gametest/*
+/common/runs/gametestserver/*

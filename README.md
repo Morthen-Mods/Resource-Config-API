@@ -6,5 +6,5 @@
 
 Resource Config API is an API build for my personal needs, but feel free to also use it for your own mods.
 
-This is an Annotation based Config API that utilizes the GSON Library, so all config files are in the json format, 
+This is an Annotation based Config API that utilizes the GSON Library, so all config files are in the json format,
 that provides a Config Screen for every mod that registered a Config, on Fabric ModMenu or Catalogue with Menulogue is needed for that.

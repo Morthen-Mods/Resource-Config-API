@@ -1,11 +1,17 @@
-modLoader = "javafml"
-loaderVersion = "[2,)"
-license = "MIT"
+modLoader = "javafml" #mandatory
+loaderVersion = "[4,)" #mandatory
+license = "${mod_license}"
 
 [[mods]]
-    modId = "resourceconfigapi_test"
-    version = "1.0-TEST"
-    displayName = "Resource Config API Test"
-    authors = "xStopho"
-    description = "Testmod for Resource Config API"
-    logoFile = "icon_forge.png"
+    modId = "${mod_id}_testmod"
+    version = "${version}"
+    displayName = "${mod_name} - Test Mod"
+    authors = "${mod_author}"
+    description = '''${mod_description}'''
+
+[[dependencies.${mod_id}]]
+    modId = "${mod_id}"
+    type="required"
+    versionRange = "[${version},)"
+    ordering = "BEFORE"
+    side = "BOTH"

@@ -1,0 +1,19 @@
+modLoader = "javafml" #mandatory
+loaderVersion = "[0,)" #mandatory
+license = "${mod_license}"
+issueTrackerURL = "${issues_url}"
+
+[[mods]]
+    modId = "${mod_id}_testmod"
+    version = "${version}"
+    displayName = "${mod_name} - Test Mod"
+    logoFile="${mod_id}.png"
+    authors = "${mod_author}"
+    description = '''${mod_description}'''
+
+[[dependencies.${mod_id}_testmod]]
+    modId = "${mod_id}"
+    mandatory = true
+    versionRange = "[${version},)"
+    ordering = "BEFORE"
+    side = "BOTH"

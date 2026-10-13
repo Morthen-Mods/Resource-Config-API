@@ -1,8 +1,0 @@
-plugins {
-    id 'idea'
-    id 'java-library'
-    id 'net.fabricmc.fabric-loom' version "${fabric_loom}" apply false
-    id 'net.minecraftforge.gradle' version "[${forge_gradle},8.0)" apply false
-    id 'net.neoforged.moddev' version "${moddev_gradle}" apply false
-    id 'me.modmuss50.mod-publish-plugin' version "${mod_publish}" apply false
-}
