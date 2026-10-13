@@ -12,8 +12,6 @@ import java.util.Map;
 public final class ConfigRegistry {
     private static final Map<Identifier, ModConfig> CONFIGS = new LinkedHashMap<>();
 
-    private ConfigRegistry() {}
-
     /**
      * Registers the config held by {@code clazz} under {@code modId}, loads it from
      * {@code config/<modId>/<type>/<fileName>.json} and writes the file back with any missing entries.

@@ -12,7 +12,4 @@ public class ConfigConstants {
     public static Identifier of(String path) {
         return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
-
-    public static void commonInit() {
-    }
 }

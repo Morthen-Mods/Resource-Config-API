@@ -1,13 +1,14 @@
 package net.morthen.resource_config_api.service;
 
 import net.morthen.resource_config_api.ConfigConstants;
+import net.morthen.resource_config_api.service.platform.INetworkHelper;
 import net.morthen.resource_config_api.service.platform.IPlatformHelper;
 
 import java.util.ServiceLoader;
 
 public class Services {
-
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
+    public static final INetworkHelper NETWORK = load(INetworkHelper.class);
 
     public static <T> T load(Class<T> clazz) {
         final T loadedService = ServiceLoader.load(clazz)
