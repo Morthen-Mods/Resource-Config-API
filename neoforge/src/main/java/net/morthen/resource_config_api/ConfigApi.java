@@ -1,14 +1,20 @@
 package net.morthen.resource_config_api;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.morthen.resource_config_api.api.ConfigRegistry;
+import net.morthen.resource_config_api.api.ModConfig;
 import net.morthen.resource_config_api.client.ClientConfigSync;
+import net.morthen.resource_config_api.client.screen.ConfigScreen;
 import net.morthen.resource_config_api.network.ConfigNetworking;
 import net.morthen.resource_config_api.network.ConfigSyncPayload;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -45,6 +51,17 @@ public class ConfigApi {
         @SubscribeEvent
         public static void onPlayerLogout(ClientPlayerNetworkEvent.LoggingOut event) {
             ClientConfigSync.onDisconnect();
+        }
+
+        @SubscribeEvent
+        public static void commonSetup(FMLClientSetupEvent event) {
+            ConfigRegistry.all().stream().map(ModConfig::modId).distinct().forEach(modId ->
+                    ModList.get().getModContainerById(modId).ifPresent(mod -> {
+                        if (mod.getCustomExtension(IConfigScreenFactory.class).isEmpty()) {
+                            mod.registerExtensionPoint(IConfigScreenFactory.class, (container, parent) -> new ConfigScreen(parent, modId));
+                        }
+                    })
+            );
         }
     }
 }

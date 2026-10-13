@@ -17,6 +17,7 @@ import net.minecraftforge.network.ChannelBuilder;
 import net.morthen.resource_config_api.api.ConfigRegistry;
 import net.morthen.resource_config_api.api.ModConfig;
 import net.morthen.resource_config_api.client.ClientConfigSync;
+import net.morthen.resource_config_api.client.screen.ConfigScreen;
 import net.morthen.resource_config_api.network.ConfigNetworking;
 import net.morthen.resource_config_api.network.ConfigSyncPayload;
 
@@ -43,6 +44,21 @@ public class ConfigApi {
         @SubscribeEvent
         public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
             if (event.getEntity() instanceof ServerPlayer player) ConfigNetworking.onPlayerJoin(player);
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = ConfigConstants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ConfigApiClientEvents {
+        @SubscribeEvent
+        public static void clientSetup(FMLClientSetupEvent event) {
+            ConfigRegistry.all().stream().map(ModConfig::modId).distinct().forEach(modId ->
+                    ModList.getModContainerById(modId).ifPresent(mod -> {
+                        if (mod.getCustomExtension(ConfigScreenHandler.ConfigScreenFactory.class).isEmpty()) {
+                            mod.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                                    () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, parent) -> new ConfigScreen(parent, modId)));
+                        }
+                    })
+            );
         }
     }
 }

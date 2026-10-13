@@ -15,12 +15,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [ "net.morthen.resource_config_api.ConfigApi" ],
-    "client": [ "net.morthen.resource_config_api.ConfigApiClient" ]
+    "client": [ "net.morthen.resource_config_api.ConfigApiClient" ],
+    "modmenu": [ "net.morthen.resource_config_api.ConfigApiModMenu" ]
   },
   "depends": {
     "fabricloader": ">=${fabric_loader}",
     "fabric-api": ">=${fabric_api}",
     "minecraft": "~${minecraft_version}",
     "java": ">=${java_version}"
+  },
+  "suggests": {
+    "modmenu": "*"
   }
 }
