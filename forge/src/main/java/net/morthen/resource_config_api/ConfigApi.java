@@ -54,14 +54,16 @@ public class ConfigApi {
     public static class ConfigApiClientEvents {
         @SubscribeEvent
         public static void clientSetup(FMLClientSetupEvent event) {
-            for (ModConfig config : ConfigRegistry.all()) {
+            ConfigRegistry.all().forEach(config -> {
                 Optional<? extends ModContainer> modContainer = ModList.getModContainerById(config.modId());
 
                 modContainer.ifPresent(mod -> {
+                    if (mod.getCustomExtension(ConfigScreenHandler.ConfigScreenFactory.class).isPresent()) return;
+
                     mod.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                            () -> new ConfigScreenHandler.ConfigScreenFactory((client,  screen) -> new ConfigScreen(screen, config.modId())));
+                            () -> new ConfigScreenHandler.ConfigScreenFactory((_, parent) -> new ConfigScreen(parent, config.modId())));
                 });
-            }
+            });
         }
     }
 }

@@ -9,6 +9,7 @@ import net.morthen.resource_config_api.network.ConfigNetworking;
 import net.morthen.resource_config_api.network.ConfigSyncPayload;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
@@ -19,6 +20,8 @@ import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlers
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+
+import java.util.Optional;
 
 @Mod(ConfigConstants.MOD_ID)
 public class ConfigApi {
@@ -55,13 +58,15 @@ public class ConfigApi {
 
         @SubscribeEvent
         public static void commonSetup(FMLClientSetupEvent event) {
-            ConfigRegistry.all().stream().map(ModConfig::modId).distinct().forEach(modId ->
-                    ModList.get().getModContainerById(modId).ifPresent(mod -> {
-                        if (mod.getCustomExtension(IConfigScreenFactory.class).isEmpty()) {
-                            mod.registerExtensionPoint(IConfigScreenFactory.class, (container, parent) -> new ConfigScreen(parent, modId));
-                        }
-                    })
-            );
+            ConfigRegistry.all().forEach(config -> {
+                Optional<? extends ModContainer> modContainer = ModList.get().getModContainerById(config.modId());
+
+                modContainer.ifPresent(mod -> {
+                    if (mod.getCustomExtension(IConfigScreenFactory.class).isPresent()) return;
+
+                    mod.registerExtensionPoint(IConfigScreenFactory.class, (_, parent) -> new ConfigScreen(parent, config.modId()));
+                });
+            });
         }
     }
 }
