@@ -6,6 +6,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(TestmodConstants.MOD_ID)
 public class TestMod {
     public TestMod(FMLJavaModLoadingContext context) {
-
+        TestmodConstants.commonInit();
     }
 }
