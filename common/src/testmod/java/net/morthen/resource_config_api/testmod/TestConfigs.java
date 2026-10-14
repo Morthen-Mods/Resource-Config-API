@@ -1,9 +1,6 @@
 package net.morthen.resource_config_api.testmod;
 
-import net.morthen.resource_config_api.api.Config;
-import net.morthen.resource_config_api.api.ConfigEntry;
-import net.morthen.resource_config_api.api.ConfigType;
-import net.morthen.resource_config_api.api.RangedEntry;
+import net.morthen.resource_config_api.api.*;
 
 public class TestConfigs {
 
@@ -19,11 +16,11 @@ public class TestConfigs {
         @ConfigEntry
         public static int testInt = 100;
 
-        @ConfigEntry
+        @ConfigEntry(impact = EntryImpact.WORLD_RESTART)
         @RangedEntry(minValue = 25, maxValue = 50)
         public static int rangedInt = 45;
 
-        @ConfigEntry
+        @ConfigEntry(impact = EntryImpact.GAME_RESTART)
         public static String testString = "This is a test string";
 
         @ConfigEntry

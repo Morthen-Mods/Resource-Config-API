@@ -16,9 +16,7 @@ public @interface ConfigEntry {
     /** Category the entry is grouped under in the config screen. */
     String category() default "";
 
-    boolean needsGameRestart() default false;
-
-    boolean needsWorldRestart() default false;
+    EntryImpact impact() default EntryImpact.DIRECT;
 
     /**
      * Shared translation key for entries that have the same label and tooltip.
