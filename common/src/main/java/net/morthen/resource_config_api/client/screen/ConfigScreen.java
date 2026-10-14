@@ -15,6 +15,7 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.morthen.resource_config_api.ConfigConstants;
 import net.morthen.resource_config_api.api.ConfigRegistry;
 import net.morthen.resource_config_api.api.ConfigType;
 import net.morthen.resource_config_api.api.ModConfig;
@@ -42,7 +43,7 @@ public class ConfigScreen extends Screen {
                     .toList();
 
             if (!configs.isEmpty()) {
-                Component title = Component.translatable("config_api.tab." + type);
+                Component title = type.getLabel();
                 tabs.add(new ConfigTab(title, configs, ClientConfigSync.canEdit(type)));
             }
         }
@@ -53,13 +54,13 @@ public class ConfigScreen extends Screen {
         navBar = TabNavigationBar.builder(tabManager, width).addTabs(tabs.toArray(Tab[]::new)).build();
         for (int i = 0; i < tabs.size(); i++) {
             if (!tabs.get(i).isEditable()) {
-                navBar.setTabTooltip(i, Tooltip.create(Component.translatable("config_api.read_only")));
+                navBar.setTabTooltip(i, Tooltip.create(ConfigConstants.READ_ONLY));
             }
         }
         addRenderableWidget(navBar);
 
         LinearLayout footer = layout.addToFooter(LinearLayout.horizontal().spacing(8));
-        footer.addChild(Button.builder(Component.translatable("config_api.button.save"), button -> saveAndClose()).build());
+        footer.addChild(Button.builder(ConfigConstants.SAVE_AND_CLOSE, button -> saveAndClose()).build());
         footer.addChild(Button.builder(CommonComponents.GUI_CANCEL, button -> onClose()).build());
         layout.visitWidgets(this::addRenderableWidget);
 

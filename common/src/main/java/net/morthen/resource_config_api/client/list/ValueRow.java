@@ -12,6 +12,7 @@ import net.morthen.resource_config_api.ConfigConstants;
 import net.morthen.resource_config_api.api.ConfigEntry;
 import net.morthen.resource_config_api.api.ModConfig;
 import net.morthen.resource_config_api.client.widget.ValueInput;
+import oshi.util.tuples.Pair;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class ValueRow extends Row {
         input.widget().active = editable;
         if (input.widget() instanceof EditBox editBox) editBox.setEditable(editable);
 
-        Component resetText = Component.translatable("config_api.reset");
+        Component resetText = ConfigConstants.RESET;
         resetButton = new ImageButton(16, 16, RESET_SPRITES, button -> input.write().accept(config.getDefault(key)), resetText);
         resetButton.setTooltip(Tooltip.create(resetText));
 
@@ -51,9 +52,8 @@ public class ValueRow extends Row {
         tooltip = Component.translatable(translationKey + ".tooltip");
 
         ConfigEntry entry = config.entry(key);
-        String restart = entry.needsGameRestart() ? "game_restart" : entry.needsWorldRestart() ? "world_restart" : "direct_impact";
-        restartIcon = ConfigConstants.of("icon/" + restart);
-        restartTooltip = Component.translatable("config_api." + restart);
+        restartIcon = entry.impact().getIcon();
+        restartTooltip = entry.impact().getTooltip();
     }
 
     public AbstractWidget getWidget() {

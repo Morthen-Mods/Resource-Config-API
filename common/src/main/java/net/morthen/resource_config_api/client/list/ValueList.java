@@ -3,6 +3,7 @@ package net.morthen.resource_config_api.client.list;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.network.chat.Component;
+import net.morthen.resource_config_api.ConfigConstants;
 import net.morthen.resource_config_api.api.ModConfig;
 import net.morthen.resource_config_api.client.widget.DropdownWidget;
 
@@ -30,7 +31,7 @@ public class ValueList extends ContainerObjectSelectionList<Row> {
     }
 
     private static Component categoryLabel(ModConfig config, String category) {
-        if (category.isBlank()) return Component.translatable("config_api.category.general");
+        if (category.isBlank()) return ConfigConstants.CATEGORY_GENERAL;
         return Component.translatableWithFallback(config.translationKey() + "." + category + ".label", category);
     }
 

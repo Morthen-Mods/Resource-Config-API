@@ -1,0 +1,11 @@
+{
+  "resource_config_api.tab.client": "Client",
+  "resource_config_api.tab.common": "Common",
+  "resource_config_api.category.general": "General",
+  "resource_config_api.reset": "Reset to default",
+  "resource_config_api.read_only": "Only operators can change these values on this server",
+  "resource_config_api.direct_impact": "Applies immediately",
+  "resource_config_api.world_restart": "Needs a world restart",
+  "resource_config_api.game_restart": "Needs a game restart",
+  "resource_config_api.save_and_close": "Save & Close"
+}
