@@ -2,7 +2,6 @@ package net.morthen.resource_config_api;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.morthen.resource_config_api.api.ConfigRegistry;
-import net.morthen.resource_config_api.api.ModConfig;
 import net.morthen.resource_config_api.client.ClientConfigSync;
 import net.morthen.resource_config_api.client.screen.ConfigScreen;
 import net.morthen.resource_config_api.network.ConfigNetworking;
@@ -57,7 +56,7 @@ public class ConfigApi {
         }
 
         @SubscribeEvent
-        public static void commonSetup(FMLClientSetupEvent event) {
+        public static void clientSetup(FMLClientSetupEvent event) {
             ConfigRegistry.all().forEach(config -> {
                 Optional<? extends ModContainer> modContainer = ModList.get().getModContainerById(config.modId());
 

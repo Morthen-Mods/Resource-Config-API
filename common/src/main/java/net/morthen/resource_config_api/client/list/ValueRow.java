@@ -12,7 +12,6 @@ import net.morthen.resource_config_api.ConfigConstants;
 import net.morthen.resource_config_api.api.ConfigEntry;
 import net.morthen.resource_config_api.api.ModConfig;
 import net.morthen.resource_config_api.client.widget.ValueInput;
-import oshi.util.tuples.Pair;
 
 import java.util.List;
 import java.util.Map;
