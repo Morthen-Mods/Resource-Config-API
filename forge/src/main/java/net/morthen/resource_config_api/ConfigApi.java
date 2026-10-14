@@ -8,6 +8,7 @@ import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -20,6 +21,8 @@ import net.morthen.resource_config_api.client.ClientConfigSync;
 import net.morthen.resource_config_api.client.screen.ConfigScreen;
 import net.morthen.resource_config_api.network.ConfigNetworking;
 import net.morthen.resource_config_api.network.ConfigSyncPayload;
+
+import java.util.Optional;
 
 @Mod(ConfigConstants.MOD_ID)
 public class ConfigApi {
@@ -51,14 +54,14 @@ public class ConfigApi {
     public static class ConfigApiClientEvents {
         @SubscribeEvent
         public static void clientSetup(FMLClientSetupEvent event) {
-            ConfigRegistry.all().stream().map(ModConfig::modId).distinct().forEach(modId ->
-                    ModList.getModContainerById(modId).ifPresent(mod -> {
-                        if (mod.getCustomExtension(ConfigScreenHandler.ConfigScreenFactory.class).isEmpty()) {
-                            mod.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                                    () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, parent) -> new ConfigScreen(parent, modId)));
-                        }
-                    })
-            );
+            for (ModConfig config : ConfigRegistry.all()) {
+                Optional<? extends ModContainer> modContainer = ModList.getModContainerById(config.modId());
+
+                modContainer.ifPresent(mod -> {
+                    mod.registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                            () -> new ConfigScreenHandler.ConfigScreenFactory((client,  screen) -> new ConfigScreen(screen, config.modId())));
+                });
+            }
         }
     }
 }
