@@ -4,10 +4,7 @@ import net.minecraft.resources.Identifier;
 import net.morthen.resource_config_api.ConfigConstants;
 import net.morthen.resource_config_api.service.Services;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public final class ConfigRegistry {
     private static final Map<Identifier, ModConfig> CONFIGS = new LinkedHashMap<>();
@@ -20,7 +17,7 @@ public final class ConfigRegistry {
      * @throws IllegalArgumentException if the class is not annotated with {@link Config}
      * @throws IllegalStateException if a config with the same type and file name is already registered for the mod
      */
-    public static ModConfig register(Class<?> clazz, String modId) {
+    public synchronized static ModConfig register(Class<?> clazz, String modId) {
         if (!clazz.isAnnotationPresent(Config.class)) {
             throw new IllegalArgumentException(clazz.getName() + " is missing the @Config annotation");
         }
@@ -40,11 +37,11 @@ public final class ConfigRegistry {
         return config;
     }
 
-    public static ModConfig get(Identifier id) {
+    public synchronized static ModConfig get(Identifier id) {
         return CONFIGS.get(id);
     }
 
-    public static Collection<ModConfig> all() {
-        return Collections.unmodifiableCollection(CONFIGS.values());
+    public synchronized static Collection<ModConfig> all() {
+        return List.copyOf(CONFIGS.values());
     }
 }
