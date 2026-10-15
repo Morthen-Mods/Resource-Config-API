@@ -1,6 +1,5 @@
 package net.morthen.resource_config_api;
 
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
@@ -12,8 +11,8 @@ import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.network.Channel;
 import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.SimpleChannel;
 import net.morthen.resource_config_api.api.ConfigRegistry;
 import net.morthen.resource_config_api.client.ClientConfigSync;
 import net.morthen.resource_config_api.client.screen.ConfigScreen;
@@ -24,8 +23,11 @@ import java.util.Optional;
 
 @Mod(ConfigConstants.MOD_ID)
 public class ConfigApi {
-    public static final Channel<CustomPacketPayload> CHANNEL = ChannelBuilder.named(ConfigConstants.of("main"))
-            .optional().payloadChannel().play().bidirectional().addMain(ConfigSyncPayload.TYPE, ConfigSyncPayload.CODEC.cast(), ConfigApi::handle).build();
+    public static final SimpleChannel CHANNEL = ChannelBuilder.named(ConfigConstants.of("main"))
+            .networkProtocolVersion(1).optional().simpleChannel()
+            .play().bidirectional()
+            .addMain(ConfigSyncPayload.class, ConfigSyncPayload.CODEC, ConfigApi::handle)
+            .build();
 
     private static void handle(ConfigSyncPayload payload, CustomPayloadEvent.Context ctx) {
         if (ctx.isServerSide()) ConfigNetworking.onReceive(payload, ctx.getSender());
