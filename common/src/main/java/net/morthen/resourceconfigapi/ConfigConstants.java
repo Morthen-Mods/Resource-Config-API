@@ -21,20 +21,4 @@ public class ConfigConstants {
 	public static Identifier of(String id) {
 		return Identifier.fromNamespaceAndPath(MOD_ID, id);
 	}
-
-	public static <T extends CustomPacketPayload> CustomPacketPayload.Type<T> type(String id) {
-		return new CustomPacketPayload.Type<>(ConfigConstants.of(id));
-	}
-
-    public static void syncConfigs(ServerPlayer player) {
-		ConfigConstants.LOG.info("Syncing Server Configs with Client");
-		for (Map.Entry<Identifier, ModConfig> entry : ConfigRegistry.getConfigEntries()) {
-			Identifier location = entry.getKey();
-			ModConfig config = entry.getValue();
-
-			if (location.toString().contains("client")) continue;
-			ConfigConstants.LOG.info("Sending data for Config '{}'", location);
-			ConfigNetwork.INSTANCE.sendToClient(player, new ConfigSyncPayload(location.toString(), config.toJson().toString()));
-		}
-    }
 }
