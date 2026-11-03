@@ -1,64 +1,51 @@
 package net.morthen.resourceconfigapi.api;
 
 import net.minecraft.resources.Identifier;
-import net.morthen.resourceconfigapi.ConfigConstants;
-import net.morthen.resourceconfigapi.api.annotations.Config;
-import net.morthen.resourceconfigapi.impl.ModConfigFile;
+import net.morthen.resourceconfigapi.api.annotation.Config;
+import net.morthen.resourceconfigapi.impl.ConfigManager;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
+/** Entry point of the api, configs are registered and looked up here. */
 public final class ConfigRegistry {
-    private static final Map<Identifier, ConfigFile> CONFIGS = new LinkedHashMap<>();
-    private static final Pattern VALID_NAME = Pattern.compile("[a-z0-9_.-]+");
 
     private ConfigRegistry() {}
 
-    public static synchronized ConfigFile register(Class<?> clazz, String modId) {
-        Config config = clazz.getAnnotation(Config.class);
-        if (config == null) {
-            throw new IllegalArgumentException("Cannot register '" + clazz.getName()
-                    + "', it isn't annotated with @Config");
-        }
-
-        Identifier id = createId(modId, config);
-        if (CONFIGS.containsKey(id)) {
-            throw new IllegalStateException("A config is already registered as " + id + ", '"
-                    + clazz.getName() + "' needs a different fileName");
-        }
-
-        ModConfigFile file = new ModConfigFile(clazz, config, id, modId);
-        CONFIGS.put(id, file);
-        ConfigConstants.LOGGER.debug("Registered config {}", id);
-
-        return file;
+    /**
+     * Registers the config held by the given class under {@code modId}, loads the file
+     * and applies the values to the fields.
+     * @param clazz the class annotated with {@link Config} holding the entries
+     * @param modId namespace the config is registered under
+     * @return the registered config
+     * @throws IllegalArgumentException if the class is not annotated with {@link Config} or the file name is invalid
+     * @throws IllegalStateException if a config is already registered under the same id
+     */
+    public static ConfigFile register(Class<?> clazz, String modId) {
+        return ConfigManager.register(clazz, modId);
     }
 
-    public static synchronized Collection<ConfigFile> getAll() {
-        return CONFIGS.values();
+    public static Optional<ConfigFile> get(Identifier id) {
+        return ConfigManager.get(id);
     }
 
-    public static synchronized Optional<ConfigFile> get(Identifier id) {
-        return Optional.ofNullable(CONFIGS.get(id));
+    /** @return all configs in registration order */
+    public static Collection<ConfigFile> getAll() {
+        return ConfigManager.getAll();
     }
 
-    public static synchronized Collection<ConfigFile> get(String modId) {
-        return getAll().stream().filter(config -> config.modId().equals(modId)).toList();
+    /** @return the configs of the mod in registration order */
+    public static List<ConfigFile> getConfigs(String modId) {
+        return ConfigManager.getAll().stream().filter(config -> config.modId().equals(modId)).toList();
     }
 
-    public static synchronized Collection<ConfigFile> get(String modId, ConfigType type) {
-        return get(modId).stream().filter(config -> config.type() == type).toList();
+    /** @return the configs of the mod with the given type in registration order */
+    public static List<ConfigFile> getConfigs(String modId, ConfigType type) {
+        return getConfigs(modId).stream().filter(config -> config.type() == type).toList();
     }
 
-    private static Identifier createId(String modId, Config config) {
-        if (!VALID_NAME.matcher(config.fileName()).matches()) {
-            throw new IllegalArgumentException("Invalid fileName '" + config.fileName()
-                    + "', only lowercase letters, digits, '_', '-' and '.' are allowed");
-        }
-
-        return Identifier.fromNamespaceAndPath(modId, config.type().getDirectory() + "/" + config.fileName());
+    public static List<String> getRegisteredMods() {
+        return ConfigManager.getRegisteredMods();
     }
 }

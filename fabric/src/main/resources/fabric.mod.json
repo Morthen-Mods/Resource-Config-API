@@ -14,17 +14,14 @@
   "icon": "${mod_id}.png",
   "environment": "*",
   "entrypoints": {
-    "main": [ "net.morthen.resourceconfigapi.ResourceConfig" ],
-    "client": [ "net.morthen.resourceconfigapi.ResourceConfigClient" ],
-    "modmenu": [ "net.morthen.resourceconfigapi.ResourceModMenuCompat" ]
+    "main": [ "net.morthen.resourceconfigapi.ConfigAPI" ],
+    "client": [ "net.morthen.resourceconfigapi.client.ConfigAPIClient" ],
+    "modmenu": [ "net.morthen.resourceconfigapi.client.ConfigAPIModMenu" ]
   },
-  "mixins": [
-    "${mod_id}.mixins.json"
-  ],
   "depends": {
     "fabricloader": ">=${fabric_loader}",
     "fabric-api": ">=${fabric_api}",
-    "minecraft": "${minecraft_version}",
+    "minecraft": "~${minecraft_version}",
     "java": ">=${java_version}"
   },
   "custom": {

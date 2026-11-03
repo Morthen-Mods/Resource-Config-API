@@ -1,26 +1,19 @@
 package net.morthen.resourceconfigapi.api;
 
-import net.minecraft.network.chat.Component;
-
 import java.util.Locale;
 
+/**
+ * Side a config belongs to. Currently the type only decides the folder the file is placed in
+ * and the tab it is shown in, configs are not synced between server and client.
+ */
 public enum ConfigType {
-    // Configs never get synced or loaded by the server
-    CLIENT("client"),
-    // Config get synced and loaded by the server and are editable by server admins
-    COMMON("common");
+    /** Settings that only affect the client, like rendering or controls. */
+    CLIENT,
+    /** Settings used by both sides, this includes everything that is relevant for the server. */
+    COMMON;
 
-    final Component component;
-
-    ConfigType(String key) {
-        component = Component.translatable("resource_config_api.base.config_type." + key);
-    }
-
-    public Component getComponent() {
-        return component;
-    }
-
-    public String getDirectory() {
+    /** @return the folder name used for the config files of this type */
+    public String getDirectoryName() {
         return name().toLowerCase(Locale.ROOT);
     }
 }
