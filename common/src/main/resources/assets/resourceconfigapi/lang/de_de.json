@@ -1,17 +1,42 @@
 {
-  "config.common.title": "Common",
-  "config.client.title": "Client",
-  "config.server.title": "Server",
+  "config.resourceconfigapi.screen.theme": "Design",
+  "config.resourceconfigapi.screen.theme.modern": "Modern",
+  "config.resourceconfigapi.screen.theme.vanilla": "Vanilla",
+  "config.resourceconfigapi.screen.save": "Speichern",
+  "config.resourceconfigapi.screen.reset": "Auf Standard zurücksetzen",
+  "config.resourceconfigapi.screen.reset.tooltip": "Setzt alle Werte der ausgewählten Konfiguration auf ihren Standard zurück. Es wird nichts geschrieben, bis du auf Speichern klickst.",
+  "config.resourceconfigapi.screen.undo": "Änderungen rückgängig machen",
+  "config.resourceconfigapi.screen.discard": "Verwerfen",
+  "config.resourceconfigapi.screen.discard.title": "Ungespeicherte Änderungen",
+  "config.resourceconfigapi.screen.discard.message": "Deine Änderungen verwerfen?",
+  "config.resourceconfigapi.screen.files": "Konfigurationen",
+  "config.resourceconfigapi.screen.search": "Suchen...",
+  "config.resourceconfigapi.screen.no_results": "Keine passenden Optionen",
+  "config.resourceconfigapi.screen.not_editable": "In der Konfigurationsdatei bearbeiten",
+  "config.resourceconfigapi.screen.empty": "Diese Mod hat keine Konfigurationen",
+  "config.resourceconfigapi.screen.server_editable": "Mit dem Server synchronisiert",
+  "config.resourceconfigapi.screen.server_read_only": "Vom Server festgelegt (schreibgeschützt)",
 
-  "config.button.enabled.label": "Aktiviert",
-  "config.button.disabled.label": "Deaktiviert",
+  "config.resourceconfigapi.restart.world": "Welt-Neustart erforderlich",
+  "config.resourceconfigapi.restart.game": "Spiel-Neustart erforderlich",
 
-  "config.direct_impact.tooltip": "Änderungen werden sofort berücksichtigt.",
-  "config.needs_world_restart.tooltip": "Bei Singleplayer Welten reicht es diese erneut zu betreten, bei dedizierten Servern muss dieser neu gestartet werden, ansonsten werden die Änderungen nicht berücksichtigt.",
-  "config.needs_game_restart.tooltip": "Das Spiel bzw. der Server muss neu gestartet werden, ansonsten werden die Änderungen nicht berücksichtigt.",
+  "config.resourceconfigapi.invalid_input": "Ungültige Eingabe\n",
+  "config.resourceconfigapi.invalid_integer_input": "Gültiger Eingabebereich:\n-2147483648 bis 2147483647",
 
-  "config.button.save_and_close.label": "Speichern",
-  "config.button.reset_all.label": "Alles Zurücksetzen",
-  "config.button.close.label": "Schließen",
-  "config.button.reset.label": "Zurücksetzen"
+  "config.resourceconfigapi.config_one.category_one.label": "Kategorie Eins",
+  "config.resourceconfigapi.config_one.category_one.tooltip": "Tooltip für Kategorie Eins",
+
+  "config.resourceconfigapi.config_one.category_one.testBoolean.label": "Boolean-Eintrag",
+  "config.resourceconfigapi.config_one.category_one.testBoolean.tooltip": "Tooltip für den Test-Boolean, er sollte ebenfalls auf mehrere Zeilen aufgeteilt werden, weil er zu lang ist.",
+
+  "config.resourceconfigapi.config_one.category_one.testInteger.label": "Integer-Eintrag",
+
+  "config.resourceconfigapi.config_one.category_two.label": "Kategorie Zwei",
+  "config.resourceconfigapi.config_one.colors.label": "Farben",
+  "config.resourceconfigapi.config_one.colors.testColor.label": "Hervorhebungsfarbe",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.label": "Overlay-Farbe",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.tooltip": "Farbe mit Alphakanal, gespeichert als #AARRGGBB.",
+  "config.resourceconfigapi.config_one.category_two.testBoxedInteger.label": "Boxed-Integer-Eintrag",
+  "config.resourceconfigapi.config_one.shared_option.label": "Geteilte Option",
+  "config.resourceconfigapi.config_one.shared_option.tooltip": "Beide Optionen in Kategorie Eins und Zwei nutzen diese Übersetzung."
 }

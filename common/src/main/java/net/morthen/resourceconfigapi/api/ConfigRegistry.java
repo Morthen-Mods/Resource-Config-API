@@ -1,54 +1,51 @@
 package net.morthen.resourceconfigapi.api;
 
 import net.minecraft.resources.Identifier;
-import net.morthen.resourceconfigapi.annotations.Config;
-import net.morthen.resourceconfigapi.config.ModConfig;
+import net.morthen.resourceconfigapi.api.annotation.Config;
+import net.morthen.resourceconfigapi.impl.ConfigManager;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
-public class ConfigRegistry {
+/** Entry point of the api, configs are registered and looked up here. */
+public final class ConfigRegistry {
 
-    private static final Map<Identifier, ModConfig> CONFIGS = new HashMap<>();
+    private ConfigRegistry() {}
 
     /**
-     * Registers the Config class for the given Mod ID. <br>
-     * If the Class doesn't have the {@link Config} annotation, the config class gets
-     * rejected but doesn't throw an Exception
-     * @param clazz Config class with {@link Config} annotation
-     * @param modId Mod id
+     * Registers the config held by the given class under {@code modId}, loads the file
+     * and applies the values to the fields.
+     * @param clazz the class annotated with {@link Config} holding the entries
+     * @param modId namespace the config is registered under
+     * @return the registered config
+     * @throws IllegalArgumentException if the class is not annotated with {@link Config} or the file name is invalid
+     * @throws IllegalStateException if a config is already registered under the same id
      */
-    public static ModConfig register(Class<?> clazz, String modId) {
-        if (!clazz.isAnnotationPresent(Config.class)) {
-            String error = "You try to register '%s', this class isn't flagged as a Config and was skipped!";
-            throw new IllegalArgumentException(String.format(error, clazz.getName()));
-        }
-
-        Config annotation = clazz.getAnnotation(Config.class);
-        Identifier config = of(modId, annotation.type(), annotation.fileName());
-
-        return CONFIGS.putIfAbsent(config, new ModConfig(clazz, annotation.type(), modId));
+    public static ConfigFile register(Class<?> clazz, String modId) {
+        return ConfigManager.register(clazz, modId);
     }
 
-    public static ModConfig getConfig(Identifier configLocation) {
-        return CONFIGS.get(configLocation);
+    public static Optional<ConfigFile> get(Identifier id) {
+        return ConfigManager.get(id);
     }
 
-    public static boolean contains(Identifier configLocation) {
-        return CONFIGS.containsKey(configLocation);
+    /** @return all configs in registration order */
+    public static Collection<ConfigFile> getAll() {
+        return ConfigManager.getAll();
     }
 
-    public static Map<Identifier, ModConfig> getConfigs() {
-        return CONFIGS;
+    /** @return the configs of the mod in registration order */
+    public static List<ConfigFile> getConfigs(String modId) {
+        return ConfigManager.getAll().stream().filter(config -> config.modId().equals(modId)).toList();
     }
 
-    public static Set<Map.Entry<Identifier, ModConfig>> getConfigEntries() {
-        return getConfigs().entrySet();
+    /** @return the configs of the mod with the given type in registration order */
+    public static List<ConfigFile> getConfigs(String modId, ConfigType type) {
+        return getConfigs(modId).stream().filter(config -> config.type() == type).toList();
     }
 
-    private static Identifier of(String modId, ConfigType type, String fileName) {
-        return Identifier.fromNamespaceAndPath(modId, type.name().toLowerCase(Locale.ENGLISH) + "/" + fileName);
+    public static List<String> getRegisteredMods() {
+        return ConfigManager.getRegisteredMods();
     }
 }

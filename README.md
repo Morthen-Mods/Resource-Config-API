@@ -1,6 +1,6 @@
 ![](https://cf.way2muchnoise.eu/versions/975801.svg)![](https://cf.way2muchnoise.eu/975801.svg)![Modrinth Downloads](https://img.shields.io/modrinth/dt/69TY9iyJ?logo=modrinth&label=Downloads&color=%2300AF5C)
 
-![Title Header](https://raw.githubusercontent.com/Stein-N/resources/main/images/resource_config_api/title_header.png)
+![Title Header](https://raw.githubusercontent.com/Stein-N/resources/main/images/resource_resourceconfigapi/title_header.png)
 
 ### Yet another personal Config API to make your mods folder bigger
 

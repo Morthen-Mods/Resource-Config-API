@@ -1,17 +1,42 @@
 {
-  "config.common.title": "Genel",
-  "config.client.title": "İstemci",
-  "config.server.title": "Sunucu",
+  "config.resourceconfigapi.screen.theme": "Tema",
+  "config.resourceconfigapi.screen.theme.modern": "Modern",
+  "config.resourceconfigapi.screen.theme.vanilla": "Vanilla",
+  "config.resourceconfigapi.screen.save": "Kaydet",
+  "config.resourceconfigapi.screen.reset": "Varsayılanlara Sıfırla",
+  "config.resourceconfigapi.screen.reset.tooltip": "Seçili yapılandırmanın tüm değerlerini varsayılana sıfırlar. Kaydet'e basana kadar hiçbir şey yazılmaz.",
+  "config.resourceconfigapi.screen.undo": "Değişiklikleri geri al",
+  "config.resourceconfigapi.screen.discard": "Vazgeç",
+  "config.resourceconfigapi.screen.discard.title": "Kaydedilmemiş Değişiklikler",
+  "config.resourceconfigapi.screen.discard.message": "Değişikliklerden vazgeçilsin mi?",
+  "config.resourceconfigapi.screen.files": "Yapılandırmalar",
+  "config.resourceconfigapi.screen.search": "Ara...",
+  "config.resourceconfigapi.screen.no_results": "Eşleşen seçenek yok",
+  "config.resourceconfigapi.screen.not_editable": "Yapılandırma dosyasında düzenleyin",
+  "config.resourceconfigapi.screen.empty": "Bu modun yapılandırması yok",
+  "config.resourceconfigapi.screen.server_editable": "Sunucuyla senkronize",
+  "config.resourceconfigapi.screen.server_read_only": "Sunucu tarafından ayarlandı (salt okunur)",
 
-  "config.button.enabled.label": "Etkin",
-  "config.button.disabled.label": "Devre Dışı",
+  "config.resourceconfigapi.restart.world": "Dünyanın Yeniden Başlatılması Gerekir",
+  "config.resourceconfigapi.restart.game": "Oyunun Yeniden Başlatılması Gerekir",
 
-  "config.direct_impact.tooltip": "Bu seçeneği değiştirmek oyununuza doğrudan etki eder.",
-  "config.needs_world_restart.tooltip": "Tek oyunculu modda dünyanıza yeniden katılmak yeterlidir, ancak özel bir sunucunun yeniden başlatılması gerekir, aksi takdirde değişiklikler etkili olmaz.",
-  "config.needs_game_restart.tooltip": "Oyun/Sunucu yeniden başlatılmalıdır, aksi takdirde değişiklikler etkili olmaz.",
+  "config.resourceconfigapi.invalid_input": "Geçersiz Giriş\n",
+  "config.resourceconfigapi.invalid_integer_input": "Geçerli giriş aralığı:\n-2147483648 ile 2147483647 arası",
 
-  "config.button.save_and_close.label": "Kaydet ve Kapat",
-  "config.button.reset_all.label": "Hepsini Sıfırla",
-  "config.button.close.label": "Kapat",
-  "config.button.reset.label": "Sıfırla"
+  "config.resourceconfigapi.config_one.category_one.label": "Kategori Bir",
+  "config.resourceconfigapi.config_one.category_one.tooltip": "Kategori Bir İpucu",
+
+  "config.resourceconfigapi.config_one.category_one.testBoolean.label": "Mantıksal Değer",
+  "config.resourceconfigapi.config_one.category_one.testBoolean.tooltip": "Test mantıksal değeri için ipucu, çok uzun olduğu için bu da birden fazla satıra bölünmelidir.",
+
+  "config.resourceconfigapi.config_one.category_one.testInteger.label": "Tam Sayı Değeri",
+
+  "config.resourceconfigapi.config_one.category_two.label": "Kategori İki",
+  "config.resourceconfigapi.config_one.colors.label": "Renkler",
+  "config.resourceconfigapi.config_one.colors.testColor.label": "Vurgu Rengi",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.label": "Kaplama Rengi",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.tooltip": "Alfa kanallı renk, #AARRGGBB olarak saklanır.",
+  "config.resourceconfigapi.config_one.category_two.testBoxedInteger.label": "Kutulu Tam Sayı Değeri",
+  "config.resourceconfigapi.config_one.shared_option.label": "Ortak Seçenek",
+  "config.resourceconfigapi.config_one.shared_option.tooltip": "Birinci ve ikinci kategorideki seçeneklerin ikisi de bu çeviriyi kullanır."
 }

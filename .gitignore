@@ -14,8 +14,4 @@ out/
 !**/src/test/**/out/
 
 ### Game Options ###
-/common/runs/client
-!/common/runs/client/options.txt
-/common/runs/server
-!/common/runs/server/eula.txt
-!/common/runs/server/server.properties
+runs/
