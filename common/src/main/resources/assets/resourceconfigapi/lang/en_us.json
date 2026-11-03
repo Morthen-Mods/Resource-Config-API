@@ -1,0 +1,42 @@
+{
+  "config.resourceconfigapi.screen.theme": "Theme",
+  "config.resourceconfigapi.screen.theme.modern": "Modern",
+  "config.resourceconfigapi.screen.theme.vanilla": "Vanilla",
+  "config.resourceconfigapi.screen.save": "Save",
+  "config.resourceconfigapi.screen.reset": "Reset to Defaults",
+  "config.resourceconfigapi.screen.reset.tooltip": "Resets every value of the selected config to its default. Nothing is written until you press Save.",
+  "config.resourceconfigapi.screen.undo": "Undo changes",
+  "config.resourceconfigapi.screen.discard": "Discard",
+  "config.resourceconfigapi.screen.discard.title": "Unsaved Changes",
+  "config.resourceconfigapi.screen.discard.message": "Discard your changes?",
+  "config.resourceconfigapi.screen.files": "Configs",
+  "config.resourceconfigapi.screen.search": "Search...",
+  "config.resourceconfigapi.screen.no_results": "No matching options",
+  "config.resourceconfigapi.screen.not_editable": "Edit in config file",
+  "config.resourceconfigapi.screen.empty": "This mod has no configs",
+  "config.resourceconfigapi.screen.server_editable": "Synced with the server",
+  "config.resourceconfigapi.screen.server_read_only": "Set by the server (read only)",
+
+  "config.resourceconfigapi.restart.world": "Needs World Restart",
+  "config.resourceconfigapi.restart.game": "Needs Game Restart",
+
+  "config.resourceconfigapi.invalid_input": "Invalid Input\n",
+  "config.resourceconfigapi.invalid_integer_input": "Valid Input range:\n-2147483648 to 2147483647",
+
+  "config.resourceconfigapi.config_one.category_one.label": "Category One",
+  "config.resourceconfigapi.config_one.category_one.tooltip": "Category One Tooltip",
+
+  "config.resourceconfigapi.config_one.category_one.testBoolean.label": "Boolean Entry",
+  "config.resourceconfigapi.config_one.category_one.testBoolean.tooltip": "Tooltip for Test Boolean, this should also be split into multiple lines because it is to long.",
+
+  "config.resourceconfigapi.config_one.category_one.testInteger.label": "Integer Entry",
+
+  "config.resourceconfigapi.config_one.category_two.label": "Category Two",
+  "config.resourceconfigapi.config_one.colors.label": "Colors",
+  "config.resourceconfigapi.config_one.colors.testColor.label": "Highlight Color",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.label": "Overlay Color",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.tooltip": "Color with alpha channel, stored as #AARRGGBB.",
+  "config.resourceconfigapi.config_one.category_two.testBoxedInteger.label": "Boxed Integer Entry",
+  "config.resourceconfigapi.config_one.shared_option.label": "Shared Option",
+  "config.resourceconfigapi.config_one.shared_option.tooltip": "Both options in category one and two use this translation."
+}

@@ -14,9 +14,9 @@
   "icon": "${mod_id}.png",
   "environment": "*",
   "entrypoints": {
-    "main": [ "net.morthen.resource_config_api.ConfigApi" ],
-    "client": [ "net.morthen.resource_config_api.ConfigApiClient" ],
-    "modmenu": [ "net.morthen.resource_config_api.ConfigApiModMenu" ]
+    "main": [ "net.morthen.resourceconfigapi.ConfigAPI" ],
+    "client": [ "net.morthen.resourceconfigapi.client.ConfigAPIClient" ],
+    "modmenu": [ "net.morthen.resourceconfigapi.client.ConfigAPIModMenu" ]
   },
   "depends": {
     "fabricloader": ">=${fabric_loader}",
@@ -24,7 +24,9 @@
     "minecraft": "~${minecraft_version}",
     "java": ">=${java_version}"
   },
-  "suggests": {
-    "modmenu": "*"
+  "custom": {
+    "modmenu": {
+      "badges": ["library"]
+    }
   }
 }
