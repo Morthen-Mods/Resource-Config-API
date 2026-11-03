@@ -9,14 +9,4 @@ public class FabricPlatformHelper implements IPlatformHelper {
     public Path getConfigDir() {
         return FabricLoader.getInstance().getConfigDir();
     }
-
-    @Override
-    public Path getServerConfigDir() {
-        return FabricLoader.getInstance().getConfigDir();
-    }
-
-    @Override
-    public boolean isDev() {
-        return FabricLoader.getInstance().isDevelopmentEnvironment();
-    }
 }
