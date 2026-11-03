@@ -1,0 +1,42 @@
+{
+  "config.resourceconfigapi.screen.theme": "Тема",
+  "config.resourceconfigapi.screen.theme.modern": "Современная",
+  "config.resourceconfigapi.screen.theme.vanilla": "Ванильная",
+  "config.resourceconfigapi.screen.save": "Сохранить",
+  "config.resourceconfigapi.screen.reset": "Сбросить к стандартным",
+  "config.resourceconfigapi.screen.reset.tooltip": "Сбрасывает все значения выбранной конфигурации к стандартным. Ничего не записывается, пока вы не нажмёте «Сохранить».",
+  "config.resourceconfigapi.screen.undo": "Отменить изменения",
+  "config.resourceconfigapi.screen.discard": "Отбросить",
+  "config.resourceconfigapi.screen.discard.title": "Несохранённые изменения",
+  "config.resourceconfigapi.screen.discard.message": "Отбросить изменения?",
+  "config.resourceconfigapi.screen.files": "Конфигурации",
+  "config.resourceconfigapi.screen.search": "Поиск...",
+  "config.resourceconfigapi.screen.no_results": "Подходящих параметров нет",
+  "config.resourceconfigapi.screen.not_editable": "Измените в файле конфигурации",
+  "config.resourceconfigapi.screen.empty": "У этого мода нет конфигураций",
+  "config.resourceconfigapi.screen.server_editable": "Синхронизируется с сервером",
+  "config.resourceconfigapi.screen.server_read_only": "Задано сервером (только чтение)",
+
+  "config.resourceconfigapi.restart.world": "Требуется перезапуск мира",
+  "config.resourceconfigapi.restart.game": "Требуется перезапуск игры",
+
+  "config.resourceconfigapi.invalid_input": "Неверный ввод\n",
+  "config.resourceconfigapi.invalid_integer_input": "Допустимый диапазон:\nот -2147483648 до 2147483647",
+
+  "config.resourceconfigapi.config_one.category_one.label": "Категория один",
+  "config.resourceconfigapi.config_one.category_one.tooltip": "Подсказка категории один",
+
+  "config.resourceconfigapi.config_one.category_one.testBoolean.label": "Логический параметр",
+  "config.resourceconfigapi.config_one.category_one.testBoolean.tooltip": "Подсказка для тестового логического параметра, она тоже должна разбиваться на несколько строк, потому что слишком длинная.",
+
+  "config.resourceconfigapi.config_one.category_one.testInteger.label": "Целочисленный параметр",
+
+  "config.resourceconfigapi.config_one.category_two.label": "Категория два",
+  "config.resourceconfigapi.config_one.colors.label": "Цвета",
+  "config.resourceconfigapi.config_one.colors.testColor.label": "Цвет выделения",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.label": "Цвет наложения",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.tooltip": "Цвет с альфа-каналом, хранится в формате #AARRGGBB.",
+  "config.resourceconfigapi.config_one.category_two.testBoxedInteger.label": "Целочисленный параметр (обёртка)",
+  "config.resourceconfigapi.config_one.shared_option.label": "Общий параметр",
+  "config.resourceconfigapi.config_one.shared_option.tooltip": "Параметры в категориях один и два используют этот перевод."
+}
