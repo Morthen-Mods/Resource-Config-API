@@ -1,20 +1,14 @@
+import net.morthen.gradle.multiloader.api.Loader
+
 plugins {
     id("net.morthen.gradle.multiloader")
 }
 
 multiloader {
-    loader = "forge"
+    loader = Loader.FORGE
 
-    forgeVersion = providers.gradleProperty("forge")
-    forgeMixins = listOf(
-        "${ modId.get() }.mixins.json"
+    // Forge reads the mixin configs from the jar manifest and the run arguments
+    mixins = listOf(
+        "$modId.mixins.json"
     )
-
-    withTestMod()
-    withModPublish()
-
-    applyMetadataReplacements(listOf("pack.mcmeta", "META-INF/mods.toml"), mapOf(
-        "forge_version" to forgeVersion.get(),
-        "issues_url" to providers.gradleProperty("issues_url")
-    ))
 }
