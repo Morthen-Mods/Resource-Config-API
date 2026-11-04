@@ -11,6 +11,20 @@ plugins {
 // Shared settings for every subproject. Mod info and loader versions are read from gradle.properties.
 multiloaderSettings {
     withTestmod()
+
+    // Forge 1.20.1 (legacy FML) needs to know which output directory belongs to which mod. Without the mod ids
+    // ForgeGradle passes main and testmod as one mod, FML then only reads the mods.toml of the testmod and fails
+    // with "mods.toml missing metadata for modid resourceconfigapi". Each entry is doubled, FML wants two per mod.
+    val forgeOutputs = project(":forge").layout.buildDirectory.dir("sourcesSets")
+    val modId = providers.gradleProperty("mod_id").get()
+    runs.matching { it.name.startsWith("testmod") }.configureEach {
+        val main = forgeOutputs.get().dir("main").asFile.absolutePath
+        val testmod = forgeOutputs.get().dir("testmod").asFile.absolutePath
+        environment("MOD_CLASSES", listOf(
+            "$modId%%$main", "$modId%%$main",
+            "${modId}_testmod%%$testmod", "${modId}_testmod%%$testmod"
+        ).joinToString(File.pathSeparator))
+    }
     // Game directories of all runs live in common/runs
     commonRunDirectory = true
 
