@@ -10,6 +10,6 @@ public class ConfigConstants {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
 	public static ResourceLocation of(String id) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
+		return new ResourceLocation(MOD_ID, id);
 	}
 }

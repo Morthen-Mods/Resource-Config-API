@@ -32,7 +32,7 @@ public class ConfigListWidget extends ThemedObjectList<ConfigListWidget.Entry> {
     }
 
     public void selectFirst() {
-        if (!this.children().isEmpty()) this.setSelected(this.children().getFirst());
+        if (!this.children().isEmpty()) this.setSelected(this.children().get(0));
     }
 
     @Override

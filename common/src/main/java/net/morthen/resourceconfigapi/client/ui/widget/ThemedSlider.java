@@ -71,7 +71,7 @@ public class ThemedSlider extends AbstractSliderButton {
 
     @Override
     public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        int left = this.getX(), top = this.getY(), right = this.getRight(), bottom = this.getBottom();
+        int left = this.getX(), top = this.getY(), right = (this.getX() + this.width), bottom = (this.getY() + this.height);
         boolean highlighted = this.isHoveredOrFocused();
 
         Themes.get().control(graphics, left, top, right, bottom, this.isHovered(), this.isFocused(), this.active);

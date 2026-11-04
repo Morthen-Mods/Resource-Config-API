@@ -21,7 +21,7 @@ public class ConfigAPIClient implements ClientModInitializer {
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             @Override
             public ResourceLocation getFabricId() {
-                return ResourceLocation.fromNamespaceAndPath(ConfigConstants.MOD_ID, "themes");
+                return new ResourceLocation(ConfigConstants.MOD_ID, "themes");
             }
 
             @Override
@@ -29,7 +29,11 @@ public class ConfigAPIClient implements ClientModInitializer {
                 themes.onResourceManagerReload(manager);
             }
         });
-        ClientPlayNetworking.registerGlobalReceiver(ConfigSyncPayload.TYPE, (payload, context) -> ClientConfigSync.onReceive(payload));
+        // the buffer is read on the network thread, the payload is handled on the client thread
+        ClientPlayNetworking.registerGlobalReceiver(ConfigSyncPayload.CHANNEL, (client, handler, buf, sender) -> {
+            ConfigSyncPayload payload = ConfigSyncPayload.decode(buf);
+            client.execute(() -> ClientConfigSync.onReceive(payload));
+        });
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ClientConfigSync.onDisconnect());
     }
 }

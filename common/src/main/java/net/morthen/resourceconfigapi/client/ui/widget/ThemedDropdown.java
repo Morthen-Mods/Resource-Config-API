@@ -1,5 +1,6 @@
 package net.morthen.resourceconfigapi.client.ui.widget;
 
+import net.minecraft.util.Mth;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -62,6 +63,13 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
         this.setMessage(displayName.apply(this.getSelected()));
     }
 
+    /** Sets size and position at once, 1.20.1 has no {@code setRectangle} yet. */
+    public void setRectangle(int width, int height, int x, int y) {
+        this.width = width;
+        this.height = height;
+        this.setPosition(x, y);
+    }
+
     public void setRowHeight(int rowHeight) {
         this.rowHeight = rowHeight;
     }
@@ -94,7 +102,7 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
         int wanted = Math.min(this.options.size(), this.maxVisibleRows);
         if (this.client.screen == null) return wanted;
 
-        int space = this.openUpwards ? this.getY() - SCREEN_MARGIN : this.client.screen.height - this.getBottom() - SCREEN_MARGIN;
+        int space = this.openUpwards ? this.getY() - SCREEN_MARGIN : this.client.screen.height - (this.getY() + this.height) - SCREEN_MARGIN;
         return Math.min(wanted, this.rowsThatFit(space));
     }
 
@@ -106,7 +114,7 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
         }
 
         int wanted = Math.min(this.options.size(), this.maxVisibleRows);
-        int below = this.rowsThatFit(this.client.screen.height - this.getBottom() - SCREEN_MARGIN);
+        int below = this.rowsThatFit(this.client.screen.height - (this.getY() + this.height) - SCREEN_MARGIN);
         int above = this.rowsThatFit(this.getY() - SCREEN_MARGIN);
         this.openUpwards = below < wanted && above > below;
     }
@@ -116,15 +124,15 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
     }
 
     private int getMenuTop() {
-        return this.openUpwards ? this.getY() - this.getMenuHeight() + 1 : this.getBottom() - 1;
+        return this.openUpwards ? this.getY() - this.getMenuHeight() + 1 : (this.getY() + this.height) - 1;
     }
 
     private boolean isOverMenu(double mouseX, double mouseY) {
-        return this.open && UiUtil.inBound(this.getX(), this.getMenuTop(), this.getRight(), this.getMenuTop() + this.getMenuHeight(), mouseX, mouseY);
+        return this.open && UiUtil.inBound(this.getX(), this.getMenuTop(), (this.getX() + this.width), this.getMenuTop() + this.getMenuHeight(), mouseX, mouseY);
     }
 
     private void ensureVisible(int index) {
-        this.scrollOffset = Math.clamp(this.scrollOffset, index - this.visibleRows() + 1, index);
+        this.scrollOffset = Mth.clamp(this.scrollOffset, index - this.visibleRows() + 1, index);
     }
 
     // --------------------------------------------------------------------------------------------
@@ -143,7 +151,7 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
     public void onClick(double mouseX, double mouseY) {
         if (this.isOverMenu(mouseX, mouseY)) {
             int visibleRow = (int) ((mouseY - this.getMenuTop() - MENU_PADDING) / this.rowHeight);
-            this.select(this.scrollOffset + Math.clamp(visibleRow, 0, this.visibleRows() - 1));
+            this.select(this.scrollOffset + Mth.clamp(visibleRow, 0, this.visibleRows() - 1));
         } else {
             this.toggle();
         }
@@ -179,7 +187,7 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
 
     @Override
     public boolean popupScrolled(double mouseX, double mouseY, double scrollY) {
-        return this.mouseScrolled(mouseX, mouseY, 0, scrollY);
+        return this.mouseScrolled(mouseX, mouseY, scrollY);
     }
 
     @Override
@@ -205,14 +213,14 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
     }
 
     @Override
-    public boolean mouseScrolled(double x, double y, double scrollX, double scrollY) {
+    public boolean mouseScrolled(double x, double y, double scrollY) {
         if (this.isOverMenu(x, y)) {
-            this.scrollOffset = Math.clamp(this.scrollOffset - (int) Math.signum(scrollY), 0,
+            this.scrollOffset = Mth.clamp(this.scrollOffset - (int) Math.signum(scrollY), 0,
                     this.options.size() - this.visibleRows());
             return true;
         }
 
-        return super.mouseScrolled(x, y, scrollX, scrollY);
+        return super.mouseScrolled(x, y, scrollY);
     }
 
     // --------------------------------------------------------------------------------------------
@@ -221,7 +229,7 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        int left = this.getX(), top = this.getY(), right = this.getRight(), bottom = this.getBottom();
+        int left = this.getX(), top = this.getY(), right = (this.getX() + this.width), bottom = (this.getY() + this.height);
         Themes.get().control(graphics, left, top, right, bottom, this.isHovered() || this.open, this.isFocused(), this.active);
 
         int color = this.active ? Themes.get().text : Themes.get().textDisabled;
@@ -235,7 +243,7 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
 
     @Override
     public void renderPopup(GuiGraphics graphics, int mouseX, int mouseY) {
-        int left = this.getX(), right = this.getRight();
+        int left = this.getX(), right = (this.getX() + this.width);
         int top = this.getMenuTop(), bottom = top + this.getMenuHeight();
 
         // background with a slight drop shadow
@@ -276,7 +284,7 @@ public class ThemedDropdown<T> extends AbstractButton implements PopupWidget {
         int maxScroll = this.options.size() - this.visibleRows();
         int thumbTop = trackTop + (trackHeight - thumbHeight) * this.scrollOffset / maxScroll;
 
-        Themes.get().scrollbar(graphics, this.getRight() - 6, trackTop, 4, trackHeight, thumbTop, thumbHeight, false);
+        Themes.get().scrollbar(graphics, (this.getX() + this.width) - 6, trackTop, 4, trackHeight, thumbTop, thumbHeight, false);
     }
 
     @Override

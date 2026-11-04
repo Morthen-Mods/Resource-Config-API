@@ -1,7 +1,7 @@
 package net.morthen.resourceconfigapi.client.screen.entry;
 
+import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
@@ -35,8 +35,8 @@ public abstract class ValueListEntry<T> extends ValueListRow {
     private static final int GAP = 4;
     private static final Component NOT_EDITABLE = Component.translatable("config.resourceconfigapi.screen.not_editable");
     private static final Component UNDO = Component.translatable("config.resourceconfigapi.screen.undo");
-    private static final ResourceLocation UNDO_SPRITE = ResourceLocation.fromNamespaceAndPath("resourceconfigapi", "widget/undo");
-    private static final ResourceLocation UNDO_HIGHLIGHTED_SPRITE = ResourceLocation.fromNamespaceAndPath("resourceconfigapi", "widget/undo_highlighted");
+    private static final ResourceLocation UNDO_SPRITE = new ResourceLocation("resourceconfigapi", "textures/gui/sprites/widget/undo.png");
+    private static final ResourceLocation UNDO_HIGHLIGHTED_SPRITE = new ResourceLocation("resourceconfigapi", "textures/gui/sprites/widget/undo_highlighted.png");
 
     protected final ConfigOption<T> option;
     private final Component label;
@@ -61,8 +61,8 @@ public abstract class ValueListEntry<T> extends ValueListRow {
         // only options that need a restart get an icon, the normal case stays unmarked
         RestartRequirement restart = option.restartRequirement();
         this.indicatorSprite = switch (restart) {
-            case GAME -> ResourceLocation.fromNamespaceAndPath("resourceconfigapi", "icon/game_restart");
-            case WORLD -> ResourceLocation.fromNamespaceAndPath("resourceconfigapi", "icon/world_restart");
+            case GAME -> new ResourceLocation("resourceconfigapi", "textures/gui/sprites/icon/game_restart.png");
+            case WORLD -> new ResourceLocation("resourceconfigapi", "textures/gui/sprites/icon/world_restart.png");
             case NONE -> null;
         };
         this.indicatorText = switch (restart) {
@@ -71,7 +71,7 @@ public abstract class ValueListEntry<T> extends ValueListRow {
             case NONE -> null;
         };
 
-        this.undoButton = new ThemedIconButton(18, UNDO_SPRITE, UNDO_HIGHLIGHTED_SPRITE, 16, UNDO, button -> this.undo());
+        this.undoButton = new ThemedIconButton(18, UNDO_SPRITE, UNDO_HIGHLIGHTED_SPRITE, 32, 16, UNDO, button -> this.undo());
         this.undoButton.setTooltip(Themes.get().tooltip(UNDO));
         this.addChild(this.undoButton);
     }
@@ -149,7 +149,7 @@ public abstract class ValueListEntry<T> extends ValueListRow {
         right -= this.undoButton.getWidth() + GAP;
 
         List<AbstractWidget> controls = this.getControls();
-        for (AbstractWidget control : controls.reversed()) {
+        for (AbstractWidget control : Lists.reverse(controls)) {
             control.active = this.editable;
             control.setPosition(right - control.getWidth(), UiUtil.centerY(cardTop, cardBottom, control.getHeight()));
             control.render(graphics, mouseX, mouseY, partialTick);
@@ -166,9 +166,7 @@ public abstract class ValueListEntry<T> extends ValueListRow {
         // the icon slot is always reserved, so the labels of all rows stay aligned
         int iconX = cardLeft + PADDING;
         if (this.indicatorSprite != null) {
-            RenderSystem.enableBlend();
-            graphics.blitSprite(this.indicatorSprite, iconX, UiUtil.centerY(cardTop, cardBottom, ICON_SIZE), ICON_SIZE, ICON_SIZE);
-            RenderSystem.disableBlend();
+            UiUtil.blitTexture(graphics, this.indicatorSprite, iconX, UiUtil.centerY(cardTop, cardBottom, ICON_SIZE), ICON_SIZE, ICON_SIZE, ICON_SIZE);
         }
 
         Component label = changed ? this.label.copy().withStyle(ChatFormatting.ITALIC) : this.label;

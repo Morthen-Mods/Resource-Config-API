@@ -38,6 +38,13 @@ public class ThemedButton extends AbstractButton {
         this.style = style;
     }
 
+    /** Sets size and position at once, 1.20.1 has no {@code setRectangle} yet. */
+    public void setRectangle(int width, int height, int x, int y) {
+        this.width = width;
+        this.height = height;
+        this.setPosition(x, y);
+    }
+
     @Override
     public void onPress() {
         this.onPress.onPress(this);
@@ -45,7 +52,7 @@ public class ThemedButton extends AbstractButton {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        int left = this.getX(), top = this.getY(), right = this.getRight(), bottom = this.getBottom();
+        int left = this.getX(), top = this.getY(), right = (this.getX() + this.width), bottom = (this.getY() + this.height);
         boolean highlighted = this.active && this.isHoveredOrFocused();
 
         Themes.get().button(graphics, left, top, right, bottom, this.style, highlighted, this.active);

@@ -64,7 +64,7 @@ public class ThemedToggle extends AbstractButton {
         this.lastFrame = now;
         this.progress = Mth.clamp(this.progress + (this.value ? step : -step), 0, 1);
 
-        int left = this.getX(), top = this.getY(), right = this.getRight(), bottom = this.getBottom();
+        int left = this.getX(), top = this.getY(), right = (this.getX() + this.width), bottom = (this.getY() + this.height);
         int track = FastColor.ARGB32.lerp(this.progress, Themes.get().toggleOff, Themes.get().toggleOn);
         if (!this.active) track = greyscale(track);
 

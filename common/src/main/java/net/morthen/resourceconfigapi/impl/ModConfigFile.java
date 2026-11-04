@@ -71,7 +71,7 @@ public final class ModConfigFile implements ConfigFile {
      */
     static ResourceLocation createId(String modId, Config config) {
         requireValidName(config.fileName(), "fileName");
-        return ResourceLocation.fromNamespaceAndPath(modId, config.type().getDirectoryName() + "/" + config.fileName());
+        return new ResourceLocation(modId, config.type().getDirectoryName() + "/" + config.fileName());
     }
 
     static void requireValidName(String name, String what) {

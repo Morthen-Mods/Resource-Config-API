@@ -21,6 +21,6 @@ issueTrackerURL = "${issues_url}"
 [[dependencies.${mod_id}]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "[${minecraft_version},1.21.2)"
+    versionRange = "[${minecraft_version},1.20.2)"
     ordering = "NONE"
     side = "BOTH"

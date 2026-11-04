@@ -19,7 +19,16 @@ public class ThemedEditBox extends EditBox {
     private Predicate<String> filter = s -> true;
 
     public ThemedEditBox(Font font, int width, int height, Component narration) {
-        super(font, width, height, narration);
+        super(font, 0, 0, width, height, narration);
+        // 1.20.1 only allows to turn the vanilla border off as a whole, the padding is added in renderWidget and onClick
+        this.setBordered(false);
+    }
+
+    /** Sets size and position at once, 1.20.1 has no {@code setRectangle} yet. */
+    public void setRectangle(int width, int height, int x, int y) {
+        this.width = width;
+        this.height = height;
+        this.setPosition(x, y);
     }
 
     /** Typed or pasted text is rejected if the resulting value doesn't match the filter. */
@@ -54,27 +63,32 @@ public class ThemedEditBox extends EditBox {
         if (!this.error) super.setTextColor(textColor);
     }
 
-    // The vanilla sprite is only drawn while isBordered() returns true, the text position still uses
-    // the bordered padding, because it reads the field directly. So the inner width has to match it.
-    @Override
-    public boolean isBordered() {
-        return false;
-    }
+    // the box is drawn without the vanilla border, but with the same padding as a bordered one
+    private static final int PADDING = 4;
 
     @Override
     public int getInnerWidth() {
-        return this.width - 8;
+        return this.width - 2 * PADDING;
+    }
+
+    @Override
+    public void onClick(double mouseX, double mouseY) {
+        super.onClick(mouseX - PADDING, mouseY);
     }
 
     @Override
     public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         if (this.isVisible()) {
-            Themes.get().control(graphics, this.getX(), this.getY(), this.getRight(), this.getBottom(),
+            Themes.get().control(graphics, this.getX(), this.getY(), (this.getX() + this.width), (this.getY() + this.height),
                     this.isHovered(), this.isFocused(), this.isActive(), this.error ? Themes.get().invalid : 0);
         }
 
         // vanilla only grays out the text of non editable boxes, disabled ones should look the same
         super.setTextColor(!this.isActive() ? Themes.get().textDisabled : this.error ? Themes.get().invalid : this.textColor);
+        // the unbordered vanilla box draws the text at the top left corner, so it gets moved into the padding
+        graphics.pose().pushPose();
+        graphics.pose().translate(PADDING, (this.height - 8) / 2f, 0);
         super.renderWidget(graphics, mouseX, mouseY, partialTick);
+        graphics.pose().popPose();
     }
 }

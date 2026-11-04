@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractSelectionList;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.tabs.Tab;
 import net.minecraft.client.gui.layouts.FrameLayout;
@@ -99,9 +100,16 @@ public class ConfigTab implements Tab {
 
     @Override
     public void visitChildren(Consumer<AbstractWidget> childrenConsumer) {
-        childrenConsumer.accept(this.configList);
         childrenConsumer.accept(this.searchBox);
-        childrenConsumer.accept(this.valueList);
+    }
+
+    /**
+     * The lists of 1.20.1 aren't widgets, so the {@code TabManager} can't add them.
+     * The screen adds and removes them itself when the tab changes.
+     */
+    public void visitLists(Consumer<AbstractSelectionList<?>> listConsumer) {
+        listConsumer.accept(this.configList);
+        listConsumer.accept(this.valueList);
     }
 
     @Override

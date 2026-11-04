@@ -8,10 +8,10 @@ multiloader {
     loader = Loader.FABRIC
 }
 
-// 1.21.1 is obfuscated, so mods have to be remapped. The multiloader plugin applies Loom
+// 1.20.1 is obfuscated, so mods have to be remapped. The multiloader plugin applies Loom
 // (and with it the modImplementation configuration) only in afterEvaluate.
 afterEvaluate {
     dependencies {
-        "modImplementation"("com.terraformersmc:modmenu:11.0.5")
+        "modImplementation"("com.terraformersmc:modmenu:7.2.2")
     }
 }

@@ -8,12 +8,16 @@ import net.minecraft.network.chat.Component;
 /**
  * Selection list without the vanilla background and separators, with a slim scrollbar and
  * the selected entry marked by an accent bar. Meant to be placed on top of a panel.
+ * <p>
+ * The lists of 1.20.1 aren't widgets, the screen has to add them with {@code addRenderableWidget} itself.
  */
 public abstract class ThemedObjectList<E extends ThemedObjectList.Entry<E>> extends ObjectSelectionList<E> {
     private Component emptyMessage;
 
     public ThemedObjectList(int itemHeight) {
-        super(Minecraft.getInstance(), 0, 0, 0, itemHeight);
+        super(Minecraft.getInstance(), 0, 0, 0, 0, itemHeight);
+        this.setRenderBackground(false);
+        this.setRenderTopAndBottom(false);
     }
 
     /** Text shown in the list while it has no entries. */
@@ -26,8 +30,9 @@ public abstract class ThemedObjectList<E extends ThemedObjectList.Entry<E>> exte
     }
 
     public void updateSizeAndPosition(int width, int height, int x, int y) {
-        this.setRectangle(width, height, x, y);
-        this.clampScrollAmount();
+        this.updateSize(width, y + height, y, y + height);
+        this.setLeftPos(x);
+        this.setScrollAmount(this.getScrollAmount());
     }
 
     /** @return true if the entries don't fit and the list can be scrolled */
@@ -35,19 +40,18 @@ public abstract class ThemedObjectList<E extends ThemedObjectList.Entry<E>> exte
         return this.getMaxScroll() > 0;
     }
 
-    // the vanilla scrollbar is replaced by the one drawn in renderDecorations
     @Override
-    protected boolean scrollbarVisible() {
-        return false;
-    }
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        // the vanilla scrollbar can't be turned off, so it is cut away and replaced by the themed one
+        graphics.enableScissor(this.x0, this.y0, this.getScrollbarPosition(), this.y1);
+        super.render(graphics, mouseX, mouseY, partialTick);
+        graphics.disableScissor();
 
-    @Override
-    protected void renderDecorations(GuiGraphics graphics, int mouseX, int mouseY) {
         if (this.scrollable()) {
-            ThemedLists.renderScrollbar(graphics, this, this.getScrollbarPosition(), this.getScrollAmount(),
+            ThemedLists.renderScrollbar(graphics, this.getScrollbarPosition(), this.y0, this.y1, this.getScrollAmount(),
                     this.getMaxScroll(), this.getMaxPosition(), mouseX, mouseY);
         }
-        ThemedLists.renderEmptyMessage(graphics, this, this.children().isEmpty() ? this.emptyMessage : null);
+        ThemedLists.renderEmptyMessage(graphics, this.x0, this.y0, this.width, this.children().isEmpty() ? this.emptyMessage : null);
     }
 
     @Override
@@ -56,16 +60,10 @@ public abstract class ThemedObjectList<E extends ThemedObjectList.Entry<E>> exte
         ThemedLists.renderSelection(graphics, this.getRowLeft(), top, width, height + 4, this.isFocused());
     }
 
-    @Override
-    protected void renderListBackground(GuiGraphics graphics) {}
-
-    @Override
-    protected void renderListSeparators(GuiGraphics graphics) {}
-
     // matches the area vanilla uses to find the entry below the mouse
     @Override
     public int getRowLeft() {
-        return this.getX() + this.width / 2 - this.getRowWidth() / 2;
+        return this.x0 + this.width / 2 - this.getRowWidth() / 2;
     }
 
     @Override
@@ -73,12 +71,13 @@ public abstract class ThemedObjectList<E extends ThemedObjectList.Entry<E>> exte
         return this.width - 4 - (this.scrollable() ? 2 * (ThemedLists.SCROLLBAR_WIDTH + 2) : 0);
     }
 
+    // vanilla only finds entries left of the scrollbar, without one the whole width is used
     @Override
     protected int getScrollbarPosition() {
-        return this.getRight() - ThemedLists.SCROLLBAR_WIDTH - 1;
+        return this.scrollable() ? this.x1 - ThemedLists.SCROLLBAR_WIDTH - 1 : this.x1;
     }
 
-    /** Entry that remembers its bounds of the last frame, the vanilla entries of 1.21.1 don't know them. */
+    /** Entry that remembers its bounds of the last frame, the vanilla entries of 1.20.1 don't know them. */
     public abstract static class Entry<E extends Entry<E>> extends ObjectSelectionList.Entry<E> {
         private int x, y, width, height;
 
@@ -96,6 +95,12 @@ public abstract class ThemedObjectList<E extends ThemedObjectList.Entry<E>> exte
 
         public int getHeight() {
             return this.height;
+        }
+
+        // the entries of 1.20.1 ignore clicks by default, so they couldn't be selected
+        @Override
+        public boolean mouseClicked(double mouseX, double mouseY, int button) {
+            return button == 0;
         }
 
         @Override

@@ -1,5 +1,6 @@
 package net.morthen.resourceconfigapi.client.ui;
 
+import net.minecraft.util.Mth;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
@@ -117,7 +118,7 @@ public class Theme {
     }
 
     private int radiusFor(int left, int top, int right, int bottom) {
-        return Math.clamp(this.cornerRadius, 0, Math.max(0, Math.min(right - left, bottom - top) / 2));
+        return Mth.clamp(this.cornerRadius, 0, Math.max(0, Math.min(right - left, bottom - top) / 2));
     }
 
     /** Fills the rectangle, the corners are rounded according to {@link #cornerRadius}. */
@@ -140,7 +141,7 @@ public class Theme {
     }
 
     private void fillRounded(GuiGraphics graphics, int left, int top, int right, int bottom, int color, int r) {
-        r = Math.clamp(r, 0, Math.max(0, Math.min(right - left, bottom - top) / 2));
+        r = Mth.clamp(r, 0, Math.max(0, Math.min(right - left, bottom - top) / 2));
         for (int i = 0; i < r; i++) {
             int inset = cornerInset(r, i);
             graphics.fill(left + inset, top + i, right - inset, top + i + 1, color);

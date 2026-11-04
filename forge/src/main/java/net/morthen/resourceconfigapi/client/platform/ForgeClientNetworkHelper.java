@@ -2,7 +2,6 @@ package net.morthen.resourceconfigapi.client.platform;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraftforge.network.PacketDistributor;
 import net.morthen.resourceconfigapi.ConfigAPI;
 import net.morthen.resourceconfigapi.network.ConfigSyncPayload;
 
@@ -15,6 +14,6 @@ public class ForgeClientNetworkHelper implements IClientNetworkHelper {
 
     @Override
     public void sendToServer(ConfigSyncPayload payload) {
-        ConfigAPI.NETWORK.send(payload, PacketDistributor.SERVER.noArg());
+        ConfigAPI.NETWORK.sendToServer(payload);
     }
 }

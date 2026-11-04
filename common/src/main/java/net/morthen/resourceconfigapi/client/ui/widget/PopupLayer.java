@@ -24,10 +24,11 @@ import java.util.function.Supplier;
  * public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
  *     return popups.keyPressed(keyCode) || super.keyPressed(keyCode, scanCode, modifiers);
  * }
- * public boolean mouseScrolled(double x, double y, double scrollX, double scrollY) {
- *     return popups.mouseScrolled(x, y, scrollY) || super.mouseScrolled(x, y, scrollX, scrollY);
+ * public boolean mouseScrolled(double x, double y, double delta) {
+ *     return popups.mouseScrolled(x, y, delta) || super.mouseScrolled(x, y, delta);
  * }
  * public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+ *     renderBackground(graphics);
  *     // hides the mouse from the widgets below an open popup
  *     super.render(graphics, popups.isOpen() ? -1 : mouseX, popups.isOpen() ? -1 : mouseY, partialTick);
  *     popups.render(graphics, mouseX, mouseY);

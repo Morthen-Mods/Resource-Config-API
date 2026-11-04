@@ -69,7 +69,9 @@ public class ConfigScreen extends Screen {
             @Override
             public void setCurrentTab(Tab tab, boolean playSound) {
                 Tab previous = this.getCurrentTab();
-                if (previous != null && previous != tab) ConfigScreen.this.onTabDeselected(previous);
+                if (previous == tab) return;
+
+                if (previous != null) ConfigScreen.this.onTabDeselected(previous);
                 super.setCurrentTab(tab, playSound);
                 ConfigScreen.this.onTabSelected(tab);
             }
@@ -104,7 +106,7 @@ public class ConfigScreen extends Screen {
     protected void repositionElements() {
         if (this.tabBar != null) {
             this.tabBar.updateWidth(this.width);
-            int top = this.tabBar.getBottom();
+            int top = this.tabBar.getY() + this.tabBar.getHeight();
             this.manager.setTabArea(new ScreenRectangle(0, top, this.width, this.height - top - FOOTER_HEIGHT));
         }
 
@@ -140,12 +142,18 @@ public class ConfigScreen extends Screen {
     }
 
     private void onTabSelected(Tab tab) {
+        if (!(tab instanceof ConfigTab configTab)) return;
+
         // remembered so the tab stays selected when init() runs again
-        if (tab instanceof ConfigTab configTab) this.selectedTab = this.tabs.indexOf(configTab);
+        this.selectedTab = this.tabs.indexOf(configTab);
+        configTab.visitLists(this::addRenderableWidget);
     }
 
     private void onTabDeselected(Tab tab) {
-        if (tab instanceof ConfigTab configTab) configTab.getPopups().forEach(PopupWidget::close);
+        if (!(tab instanceof ConfigTab configTab)) return;
+
+        configTab.getPopups().forEach(PopupWidget::close);
+        configTab.visitLists(this::removeWidget);
     }
 
     private List<PopupWidget> getAllPopups() {
@@ -236,8 +244,8 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    public boolean mouseScrolled(double x, double y, double scrollX, double scrollY) {
-        return this.popups.mouseScrolled(x, y, scrollY) || super.mouseScrolled(x, y, scrollX, scrollY);
+    public boolean mouseScrolled(double x, double y, double delta) {
+        return this.popups.mouseScrolled(x, y, delta) || super.mouseScrolled(x, y, delta);
     }
 
     @Override
@@ -262,6 +270,10 @@ public class ConfigScreen extends Screen {
         this.cancelButton.setMessage(changes ? CommonComponents.GUI_CANCEL : CommonComponents.GUI_DONE);
         this.resetButton.active = tab != null && tab.isEditable();
 
+        // the screens of 1.20.1 draw their background themselves, the panels lie between it and the widgets
+        this.renderBackground(graphics);
+        this.renderPanels(graphics, tab);
+
         // while a popup is open every click outside of it only closes it, so the widgets below
         // get a mouse position off screen, otherwise they'd show hover effects
         boolean blocked = this.popups.isOpen();
@@ -275,11 +287,7 @@ public class ConfigScreen extends Screen {
     }
 
     /** The panels are drawn on top of the vanilla background, but below the widgets. */
-    @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        ConfigTab tab = this.getCurrentTab();
-
+    private void renderPanels(GuiGraphics graphics, ConfigTab tab) {
         // footer
         int footerTop = this.height - FOOTER_HEIGHT;
         graphics.fill(0, footerTop, this.width, this.height, Themes.get().header);

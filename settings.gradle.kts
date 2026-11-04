@@ -16,4 +16,4 @@ plugins {
 
 rootProject.name = "Resource-Config-API"
 
-listOf("common", "fabric", "forge", "neoforge").forEach(::include)
+listOf("common", "fabric", "forge").forEach(::include)

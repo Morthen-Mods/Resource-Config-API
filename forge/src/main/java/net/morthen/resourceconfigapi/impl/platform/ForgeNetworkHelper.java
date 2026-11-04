@@ -8,11 +8,11 @@ import net.morthen.resourceconfigapi.network.ConfigSyncPayload;
 public class ForgeNetworkHelper implements INetworkHelper {
     @Override
     public boolean canSendToPlayer(ServerPlayer player) {
-        return ConfigAPI.NETWORK.isRemotePresent(player.connection.getConnection());
+        return ConfigAPI.NETWORK.isRemotePresent(player.connection.connection);
     }
 
     @Override
     public void sendToPlayer(ServerPlayer player, ConfigSyncPayload payload) {
-        ConfigAPI.NETWORK.send(payload, PacketDistributor.PLAYER.with(player));
+        ConfigAPI.NETWORK.send(PacketDistributor.PLAYER.with(() -> player), payload);
     }
 }

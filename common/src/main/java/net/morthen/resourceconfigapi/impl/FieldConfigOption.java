@@ -1,5 +1,6 @@
 package net.morthen.resourceconfigapi.impl;
 
+import net.minecraft.util.Mth;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import net.morthen.resourceconfigapi.ConfigConstants;
@@ -158,7 +159,7 @@ final class FieldConfigOption<T> implements ConfigOption<T> {
         double original = number.doubleValue();
         if (original >= min && original <= max) return value;
 
-        double clamped = Math.clamp(original, min, max);
+        double clamped = Mth.clamp(original, min, max);
         ConfigConstants.LOGGER.warn("Config entry {} = {} is outside of [{}, {}], clamping it", this.key(), number, min, max);
         return this.toFieldType(clamped);
     }

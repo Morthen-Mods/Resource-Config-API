@@ -1,5 +1,6 @@
 package net.morthen.resourceconfigapi.api;
 
+import net.minecraft.util.Mth;
 import net.morthen.resourceconfigapi.api.annotation.RangedEntry;
 
 /**
@@ -13,7 +14,7 @@ public record Range(double min, double max) {
     }
 
     public double clamp(double value) {
-        return Math.clamp(value, this.min, this.max);
+        return Mth.clamp(value, this.min, this.max);
     }
 
     public boolean contains(double value) {

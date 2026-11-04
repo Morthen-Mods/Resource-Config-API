@@ -62,7 +62,7 @@ public class ThemedColorPicker extends AbstractButton implements PopupWidget {
     }
 
     public void setColor(int color) {
-        this.color = this.alpha ? color : ARGB32.opaque(color);
+        this.color = this.alpha ? color : 0xFF000000 | color;
 
         int r = ARGB32.red(color), g = ARGB32.green(color), b = ARGB32.blue(color);
         int max = Math.max(r, Math.max(g, b)), min = Math.min(r, Math.min(g, b));
@@ -92,9 +92,14 @@ public class ThemedColorPicker extends AbstractButton implements PopupWidget {
     }
 
     private void updateFromHsv(int alphaValue) {
-        this.color = Mth.hsvToArgb(Math.min(this.hue, 0.9999f), this.saturation, this.brightness, alphaValue);
+        this.color = hsvToArgb(Math.min(this.hue, 0.9999f), this.saturation, this.brightness, alphaValue);
         this.setMessage(Component.literal(this.getHex()));
         if (this.responder != null) this.responder.accept(this.color);
+    }
+
+    /** {@code Mth.hsvToArgb} of newer versions, 1.20.1 only has the variant without alpha. */
+    private static int hsvToArgb(float hue, float saturation, float value, int alpha) {
+        return alpha << 24 | (Mth.hsvToRgb(hue, saturation, value) & 0xFFFFFF);
     }
 
     // --------------------------------------------------------------------------------------------
@@ -111,14 +116,14 @@ public class ThemedColorPicker extends AbstractButton implements PopupWidget {
 
     private int popupX() {
         int screenWidth = this.client.screen == null ? Integer.MAX_VALUE : this.client.screen.width;
-        return Math.clamp(this.getRight() - this.popupWidth(), SCREEN_MARGIN, Math.max(SCREEN_MARGIN, screenWidth - this.popupWidth() - SCREEN_MARGIN));
+        return Mth.clamp((this.getX() + this.width) - this.popupWidth(), SCREEN_MARGIN, Math.max(SCREEN_MARGIN, screenWidth - this.popupWidth() - SCREEN_MARGIN));
     }
 
     /** Opens upwards if there isn't enough room below, computed from the current position because lists can move the widget. */
     private int popupY() {
         int screenHeight = this.client.screen == null ? Integer.MAX_VALUE : this.client.screen.height;
-        boolean upwards = this.getBottom() + this.popupHeight() + SCREEN_MARGIN > screenHeight && this.getY() - this.popupHeight() > SCREEN_MARGIN;
-        return upwards ? this.getY() - this.popupHeight() - 1 : this.getBottom() + 1;
+        boolean upwards = (this.getY() + this.height) + this.popupHeight() + SCREEN_MARGIN > screenHeight && this.getY() - this.popupHeight() > SCREEN_MARGIN;
+        return upwards ? this.getY() - this.popupHeight() - 1 : (this.getY() + this.height) + 1;
     }
 
     private int fieldX() {
@@ -230,7 +235,7 @@ public class ThemedColorPicker extends AbstractButton implements PopupWidget {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        int left = this.getX(), top = this.getY(), right = this.getRight(), bottom = this.getBottom();
+        int left = this.getX(), top = this.getY(), right = (this.getX() + this.width), bottom = (this.getY() + this.height);
         Themes.get().control(graphics, left, top, right, bottom, this.isHovered() || this.open, this.isFocused(), this.active);
 
         if (this.alpha) Themes.get().checkerboard(graphics, left + 3, top + 3, right - 3, bottom - 3);
@@ -251,7 +256,7 @@ public class ThemedColorPicker extends AbstractButton implements PopupWidget {
         // saturation from left to right, brightness from top to bottom
         int fy = this.fieldY();
         for (int i = 0; i < FIELD_WIDTH; i++) {
-            int topColor = Mth.hsvToArgb(hue, i / (float) (FIELD_WIDTH - 1), 1, 255);
+            int topColor = hsvToArgb(hue, i / (float) (FIELD_WIDTH - 1), 1, 255);
             graphics.fillGradient(left + i, fy, left + i + 1, fy + FIELD_HEIGHT, topColor, 0xFF000000);
         }
         graphics.renderOutline(left - 1, fy - 1, FIELD_WIDTH + 2, FIELD_HEIGHT + 2, 0xFF000000);
@@ -263,7 +268,7 @@ public class ThemedColorPicker extends AbstractButton implements PopupWidget {
         // hue bar
         int hy = this.hueY();
         for (int i = 0; i < FIELD_WIDTH; i++) {
-            graphics.fill(left + i, hy, left + i + 1, hy + BAR_HEIGHT, Mth.hsvToArgb(Math.min(i / (float) FIELD_WIDTH, 0.9999f), 1, 1, 255));
+            graphics.fill(left + i, hy, left + i + 1, hy + BAR_HEIGHT, hsvToArgb(Math.min(i / (float) FIELD_WIDTH, 0.9999f), 1, 1, 255));
         }
         this.renderBarMarker(graphics, left + Math.round(hue * (FIELD_WIDTH - 1)), hy);
 

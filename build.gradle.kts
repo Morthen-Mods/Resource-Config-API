@@ -15,12 +15,11 @@ multiloaderSettings {
     commonRunDirectory = true
 
     applyMetadataReplacements(
-        listOf("pack.mcmeta", "*.mixins.json", "fabric.mod.json", "META-INF/mods.toml", "META-INF/neoforge.mods.toml"),
+        listOf("pack.mcmeta", "*.mixins.json", "fabric.mod.json", "META-INF/mods.toml"),
         mapOf(
             "fabric_api" to fabricApiVersion,
             "fabric_loader" to fabricLoaderVersion,
             "forge_version" to forgeVersion,
-            "neoforge_version" to neoforgeVersion,
             "sources_url" to providers.gradleProperty("sources_url"),
             "issues_url" to providers.gradleProperty("issues_url")
         )

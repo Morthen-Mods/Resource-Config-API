@@ -79,7 +79,7 @@ public class ThemedTabBar extends AbstractWidget {
     }
 
     private int tabAt(double mouseX, double mouseY) {
-        if (mouseY < this.getY() || mouseY >= this.getBottom()) return -1;
+        if (mouseY < this.getY() || mouseY >= (this.getY() + this.height)) return -1;
 
         for (int i = 0; i < this.tabs.size(); i++) {
             if (mouseX >= this.tabX[i] && mouseX < this.tabX[i] + this.tabWidth[i]) return i;
@@ -124,9 +124,9 @@ public class ThemedTabBar extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        int top = this.getY(), bottom = this.getBottom();
-        graphics.fill(this.getX(), top, this.getRight(), bottom, Themes.get().header);
-        graphics.fill(this.getX(), bottom - 1, this.getRight(), bottom, Themes.get().divider);
+        int top = this.getY(), bottom = (this.getY() + this.height);
+        graphics.fill(this.getX(), top, (this.getX() + this.width), bottom, Themes.get().header);
+        graphics.fill(this.getX(), bottom - 1, (this.getX() + this.width), bottom, Themes.get().divider);
 
         int selected = this.getSelectedIndex();
         int hovered = this.tabAt(mouseX, mouseY);

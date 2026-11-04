@@ -67,8 +67,8 @@ public class ThemedConfirmScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(graphics, mouseX, mouseY, partialTick);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        this.renderBackground(graphics);
 
         int left = this.panelX, top = this.panelY, right = left + this.panelWidth, bottom = top + this.panelHeight;
         Themes.get().popup(graphics, left, top, right, bottom);
@@ -81,6 +81,8 @@ public class ThemedConfirmScreen extends Screen {
             graphics.drawCenteredString(this.font, line, this.width / 2, y, Themes.get().textMuted);
             y += this.font.lineHeight;
         }
+
+        super.render(graphics, mouseX, mouseY, partialTick);
     }
 
     @Override
