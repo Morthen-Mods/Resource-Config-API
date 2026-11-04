@@ -1,8 +1,0 @@
-
-Dynamically generate TabButton Textures to prevent texture deformation
-
-
-simplify the SyncModConfigPacket to accept ByteArrays and send the complete file at once,
-current approach creates an Packet spam, because every value gets send individually.
-
-eventually switch to Gson when everything is completed when it comes to in game Config Screens.

@@ -1,25 +1,26 @@
-modLoader = "javafml"
-loaderVersion = "${forge_version_range}"
+modLoader = "javafml" #mandatory
+loaderVersion = "[0,)" #mandatory
 license = "${mod_license}"
+issueTrackerURL = "${issues_url}"
 
 [[mods]]
     modId = "${mod_id}"
     version = "${version}"
     displayName = "${mod_name}"
+    logoFile="${mod_id}_banner.png"
     authors = "${mod_author}"
     description = '''${mod_description}'''
-    logoFile = "icon_forge.png"
 
 [[dependencies.${mod_id}]]
     modId = "forge"
     mandatory = true
-    versionRange = "${forge_version_range}"
+    versionRange = "[${forge_version},)"
     ordering = "NONE"
     side = "BOTH"
 
 [[dependencies.${mod_id}]]
     modId = "minecraft"
     mandatory = true
-    versionRange = "${minecraft_version_range}"
+    versionRange = "[${minecraft_version},1.21.2)"
     ordering = "NONE"
     side = "BOTH"

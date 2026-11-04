@@ -1,17 +1,42 @@
 {
-  "config.common.title": "Comum",
-  "config.client.title": "Cliente",
-  "config.server.title": "Servidor",
+  "config.resourceconfigapi.screen.theme": "Tema",
+  "config.resourceconfigapi.screen.theme.modern": "Moderno",
+  "config.resourceconfigapi.screen.theme.vanilla": "Vanilla",
+  "config.resourceconfigapi.screen.save": "Salvar",
+  "config.resourceconfigapi.screen.reset": "Restaurar padrões",
+  "config.resourceconfigapi.screen.reset.tooltip": "Restaura todos os valores da configuração selecionada para o padrão. Nada é gravado até você clicar em Salvar.",
+  "config.resourceconfigapi.screen.undo": "Desfazer alterações",
+  "config.resourceconfigapi.screen.discard": "Descartar",
+  "config.resourceconfigapi.screen.discard.title": "Alterações não salvas",
+  "config.resourceconfigapi.screen.discard.message": "Descartar suas alterações?",
+  "config.resourceconfigapi.screen.files": "Configurações",
+  "config.resourceconfigapi.screen.search": "Pesquisar...",
+  "config.resourceconfigapi.screen.no_results": "Nenhuma opção correspondente",
+  "config.resourceconfigapi.screen.not_editable": "Edite no arquivo de configuração",
+  "config.resourceconfigapi.screen.empty": "Este mod não tem configurações",
+  "config.resourceconfigapi.screen.server_editable": "Sincronizado com o servidor",
+  "config.resourceconfigapi.screen.server_read_only": "Definido pelo servidor (somente leitura)",
 
-  "config.button.enabled.label": "Ativado",
-  "config.button.disabled.label": "Desativado",
+  "config.resourceconfigapi.restart.world": "Requer reinício do mundo",
+  "config.resourceconfigapi.restart.game": "Requer reinício do jogo",
 
-  "config.direct_impact.tooltip": "Alterar esta opção tem impacto direto no seu jogo.",
-  "config.needs_world_restart.tooltip": "Para Singleplayer, basta voltar ao seu mundo, mas um servidor dedicado precisa ser reiniciado, caso contrário, as alterações não terão efeito.",
-  "config.needs_game_restart.tooltip": "O jogo/servidor deve ser reiniciado, caso contrário, as alterações não terão efeito.",
+  "config.resourceconfigapi.invalid_input": "Entrada inválida\n",
+  "config.resourceconfigapi.invalid_integer_input": "Intervalo válido:\n-2147483648 a 2147483647",
 
-  "config.button.save_and_close.label": "Salvar e Fechar",
-  "config.button.reset_all.label": "Redefinir Tudo",
-  "config.button.close.label": "Fechar",
-  "config.button.reset.label": "Redefinir"
+  "config.resourceconfigapi.config_one.category_one.label": "Categoria Um",
+  "config.resourceconfigapi.config_one.category_one.tooltip": "Dica da Categoria Um",
+
+  "config.resourceconfigapi.config_one.category_one.testBoolean.label": "Entrada booleana",
+  "config.resourceconfigapi.config_one.category_one.testBoolean.tooltip": "Dica para o booleano de teste, ela também deve ser dividida em várias linhas por ser longa demais.",
+
+  "config.resourceconfigapi.config_one.category_one.testInteger.label": "Entrada inteira",
+
+  "config.resourceconfigapi.config_one.category_two.label": "Categoria Dois",
+  "config.resourceconfigapi.config_one.colors.label": "Cores",
+  "config.resourceconfigapi.config_one.colors.testColor.label": "Cor de destaque",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.label": "Cor de sobreposição",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.tooltip": "Cor com canal alfa, armazenada como #AARRGGBB.",
+  "config.resourceconfigapi.config_one.category_two.testBoxedInteger.label": "Entrada de inteiro encapsulado",
+  "config.resourceconfigapi.config_one.shared_option.label": "Opção compartilhada",
+  "config.resourceconfigapi.config_one.shared_option.tooltip": "As opções das categorias um e dois usam esta tradução."
 }

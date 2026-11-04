@@ -1,17 +1,42 @@
 {
-  "config.common.title": "通用",
-  "config.client.title": "客户端",
-  "config.server.title": "服务器",
+  "config.resourceconfigapi.screen.theme": "主题",
+  "config.resourceconfigapi.screen.theme.modern": "现代",
+  "config.resourceconfigapi.screen.theme.vanilla": "原版",
+  "config.resourceconfigapi.screen.save": "保存",
+  "config.resourceconfigapi.screen.reset": "重置为默认值",
+  "config.resourceconfigapi.screen.reset.tooltip": "将所选配置的所有值重置为默认值。在你点击“保存”之前不会写入任何内容。",
+  "config.resourceconfigapi.screen.undo": "撤销更改",
+  "config.resourceconfigapi.screen.discard": "放弃",
+  "config.resourceconfigapi.screen.discard.title": "未保存的更改",
+  "config.resourceconfigapi.screen.discard.message": "要放弃你的更改吗？",
+  "config.resourceconfigapi.screen.files": "配置",
+  "config.resourceconfigapi.screen.search": "搜索...",
+  "config.resourceconfigapi.screen.no_results": "没有匹配的选项",
+  "config.resourceconfigapi.screen.not_editable": "请在配置文件中编辑",
+  "config.resourceconfigapi.screen.empty": "此模组没有配置",
+  "config.resourceconfigapi.screen.server_editable": "已与服务器同步",
+  "config.resourceconfigapi.screen.server_read_only": "由服务器设定（只读）",
 
-  "config.button.enabled.label": "启用",
-  "config.button.disabled.label": "禁用",
+  "config.resourceconfigapi.restart.world": "需要重新进入世界",
+  "config.resourceconfigapi.restart.game": "需要重启游戏",
 
-  "config.direct_impact.tooltip": "更改此选项会直接影响您的游戏。",
-  "config.needs_world_restart.tooltip": "对于单人游戏，只需重新加入您的世界，但专用服务器必须重新启动，否则更改不会生效。",
-  "config.needs_game_restart.tooltip": "必须重新启动游戏/服务器，否则更改不会生效。",
+  "config.resourceconfigapi.invalid_input": "无效输入\n",
+  "config.resourceconfigapi.invalid_integer_input": "有效输入范围：\n-2147483648 至 2147483647",
 
-  "config.button.save_and_close.label": "保存并关闭",
-  "config.button.reset_all.label": "重置所有",
-  "config.button.close.label": "关闭",
-  "config.button.reset.label": "重置"
+  "config.resourceconfigapi.config_one.category_one.label": "类别一",
+  "config.resourceconfigapi.config_one.category_one.tooltip": "类别一的提示",
+
+  "config.resourceconfigapi.config_one.category_one.testBoolean.label": "布尔条目",
+  "config.resourceconfigapi.config_one.category_one.testBoolean.tooltip": "测试布尔值的提示，因为太长，这段文字也应该被拆分成多行。",
+
+  "config.resourceconfigapi.config_one.category_one.testInteger.label": "整数条目",
+
+  "config.resourceconfigapi.config_one.category_two.label": "类别二",
+  "config.resourceconfigapi.config_one.colors.label": "颜色",
+  "config.resourceconfigapi.config_one.colors.testColor.label": "高亮颜色",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.label": "叠加颜色",
+  "config.resourceconfigapi.config_one.colors.testColorAlpha.tooltip": "带透明度通道的颜色，以 #AARRGGBB 格式存储。",
+  "config.resourceconfigapi.config_one.category_two.testBoxedInteger.label": "包装整数条目",
+  "config.resourceconfigapi.config_one.shared_option.label": "共享选项",
+  "config.resourceconfigapi.config_one.shared_option.tooltip": "类别一和类别二中的选项都使用此翻译。"
 }

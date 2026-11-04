@@ -1,3 +1,31 @@
-#### 3.1.3
-- fixing wrong calculation of current Slider Entries
-  - when the range wasn't f.e. 0-50 it mosty sets it to the highest values
+#### 5.0.0
+> Changelog generated automatically
+
+- **breaking:** the config API was rewritten and moved to new packages
+    - the annotations `@Config`, `@ConfigEntry` and `@RangedEntry` moved from `net.morthen.resourceconfigapi.annotations` to `net.morthen.resourceconfigapi.api.annotation`
+    - `ConfigRegistry.register(...)` now returns a `ConfigFile` and throws if the id is already registered or the class has no `@Config`
+    - `ModConfig` and `ConfigHolder` were removed, use `ConfigFile` and `ConfigOption` instead (`ConfigRegistry.get(...)`, `getAll()`, `getConfigs(modId)`)
+    - `ConfigRegistry.getConfig(...)`, `contains(...)`, `getConfigs()` and `getConfigEntries()` were removed, use `ConfigRegistry.get(...)` and `getAll()` instead
+- **breaking:** `ConfigType.SERVER` was removed, use `ConfigType.COMMON` instead
+    - config files of the former `SERVER` type are now stored in the `common` folder
+- **breaking:** `fileName` of `@Config` and `category` / `translation` of `@ConfigEntry` may now only contain lowercase letters, digits, `_`, `-` and `.`
+    - translation keys follow `config.{modId}.{fileName}.{category}.{field}.label` / `.tooltip`, category labels use `config.{modId}.{fileName}.{category}.label`
+- **breaking:** `@ConfigEntry` fields must be `public static` and not final, otherwise they are skipped
+    - collections, maps and arrays are not supported
+- **breaking:** the old network payloads `ConfigUpdatePayload` and the string based `ConfigSyncPayload` were replaced by a single `ConfigSyncPayload`
+    - `ConfigConstants.LOG` was renamed to `ConfigConstants.LOGGER`
+- adding `@ColorEntry` for `int` options
+    - the config screen shows a color picker, the file stores a hex string (`#RRGGBB`, or `#AARRGGBB` with `alpha = true`)
+- adding `ConfigOption` accessors for values, defaults, `range()`, `restartRequirement()` and `colorMode()`
+    - `ConfigOption.set(...)` converts numbers to the field type and clamps them to the `@RangedEntry` range
+    - `ConfigFile.save()` and `ConfigFile.reload()` write and re-read the config file
+- adding a rewritten config screen with a sidebar of config files, search, undo / reset and a discard confirmation
+    - ranged numbers are shown as sliders, booleans as toggles, enums as dropdowns
+    - options needing a game or world restart are marked with an icon and tooltip
+- adding selectable UI themes (`Vanilla` and `Modern`) that can be added or changed by resource packs via `assets/resourceconfigapi/themes/<id>.json`
+    - the selected theme is remembered between launches
+- adding syncing of `COMMON` configs from the server to clients on join
+    - operators can edit `COMMON` configs in-game, the server applies, saves and broadcasts the changes; other players see them read-only
+    - the server values are only kept in memory on the client and reset on disconnect
+- changing config files to be written atomically and to drop unknown keys, invalid or missing values fall back to the defaults and out-of-range numbers are clamped
+- changing the Mod Menu integration on Fabric to show a config screen for every mod registered via `ConfigRegistry`
